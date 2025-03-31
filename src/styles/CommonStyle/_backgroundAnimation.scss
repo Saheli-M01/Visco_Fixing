@@ -1,0 +1,21 @@
+@use "../variables" as *;
+#networkCanvas {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 1.5s ease-in-out;
+    animation: fadeIn 2s ease-in-out;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        mix-blend-mode: screen;
+        pointer-events: none;
+    }
+
+   
+}
