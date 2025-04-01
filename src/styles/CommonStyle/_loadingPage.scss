@@ -1,91 +1,38 @@
 @use "../variables" as *;
 @use "../mixins" as *;
 
-// Variables
-$spinner-sizes: (
-  small: (size: 24px, border: 2px, text: 0.875rem),
-  medium: (size: 40px, border: 3px, text: 1rem),
-  large: (size: 60px, border: 4px, text: 1.25rem)
-);
+// Modern terminal theme colors
+$terminal-bg: #0a0a0a;
+$terminal-header: #1a1a1a;
+$terminal-text: #e0e0e0;
+$terminal-line-number: #666666;
+$terminal-keyword: #61afef;
+$terminal-string: #98c379;
+$terminal-accent: #ddce78;
+$terminal-border: rgba(255, 255, 255, 0.05);
 
-$wave-sizes: (
-  1: 300px,
-  2: 250px,
-  3: 200px,
-  4: 150px
-);
-
-// Terminal theme colors
-$terminal-bg: #1e1e1e;
-$terminal-header: #2d2d2d;
-$terminal-text: #d4d4d4;
-$terminal-line-number: #858585;
-$terminal-keyword: #569cd6;
-$terminal-string: #ce9178;
-$terminal-comment: #6a9955;
-
-// Loading Spinner
-.loading-spinner {
-  @include flex-center;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-
-  @each $size, $values in $spinner-sizes {
-    &.#{$size} {
-      .spinner-ring {
-        width: map-get($values, size);
-        height: map-get($values, size);
-        border-width: map-get($values, border);
-      }
-      .spinner-text {
-        font-size: map-get($values, text);
-      }
-    }
-  }
-
-  .spinner-ring {
-    border: 3px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    border-top-color: $light-yellow;
-    animation: spin 1s linear infinite;
-    will-change: transform;
-  }
-
-  .spinner-text {
-    color: $secondary-text;
-    font-size: 1rem;
-    font-weight: 500;
-    opacity: 0.8;
-  }
-
-  @each $type, $color in (
-    primary: $light-yellow,
-    success: $light-green,
-    error: $light-red,
-    info: $light-blue
-  ) {
-    &.#{$type} .spinner-ring {
-      border-top-color: $color;
-    }
-  }
-}
-
-// Loading Container
 .loading-container {
   @include flex-center;
   min-height: 100vh;
-  background: linear-gradient(135deg, $terminal-bg 0%, darken($terminal-bg, 5%) 100%);
+  background: linear-gradient(
+    135deg,
+    $terminal-bg 0%,
+    darken($terminal-bg, 3%) 100%
+  );
   position: relative;
   overflow: hidden;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba($terminal-keyword, 0.1) 0%, transparent 70%);
-    animation: rotate 20s linear infinite;
+    background: radial-gradient(
+      circle at center,
+      rgba($terminal-accent, 0.08) 0%,
+      transparent 70%
+    );
+    animation: rotate 30s linear infinite;
   }
 }
 
@@ -94,24 +41,26 @@ $terminal-comment: #6a9955;
   z-index: 2;
   text-align: center;
   width: 100%;
-  max-width: 600px;
-  padding: 0 1rem;
+  max-width: 700px;
+  padding: 0 1.5rem;
 }
 
 .terminal-window {
   background: $terminal-bg;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  margin-bottom: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  margin-bottom: 2.5rem;
   overflow: hidden;
+  border: 1px solid $terminal-border;
+  backdrop-filter: blur(10px);
 }
 
 .terminal-header {
   background: $terminal-header;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.25rem;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid $terminal-border;
 
   .terminal-controls {
     display: flex;
@@ -122,6 +71,11 @@ $terminal-comment: #6a9955;
       height: 12px;
       border-radius: 50%;
       background: #ff5f56;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
 
       &:nth-child(2) {
         background: #ffbd2e;
@@ -135,21 +89,22 @@ $terminal-comment: #6a9955;
 }
 
 .terminal-body {
-  padding: 1rem;
-  font-family: 'Fira Code', monospace;
+  padding: 1.5rem;
+  font-family: "Fira Code", monospace;
 }
 
 .code-lines {
   text-align: left;
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .code-line {
   display: flex;
   opacity: 0;
   transform: translateX(-20px);
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 0.5rem;
 
   &.active {
     opacity: 1;
@@ -158,17 +113,19 @@ $terminal-comment: #6a9955;
 
   .line-number {
     color: $terminal-line-number;
-    margin-right: 1rem;
+    margin-right: 1.5rem;
     user-select: none;
-    min-width: 2rem;
+    min-width: 2.5rem;
+    font-size: 0.9em;
   }
 
   .line-content {
     color: $terminal-text;
     position: relative;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       right: -4px;
       top: 0;
@@ -176,61 +133,44 @@ $terminal-comment: #6a9955;
       height: 100%;
       background: $terminal-text;
       animation: blink 1s infinite;
+      box-shadow: 0 0 8px $terminal-text;
     }
   }
 }
 
 .loading-bar-container {
-  width: 200px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
+  width: 240px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
+  border: 1px solid $terminal-border;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba($terminal-keyword, 0.2), transparent);
-    animation: shimmer 2s infinite;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba($terminal-accent, 0.3),
+      transparent
+    );
+    animation: shimmer 3s infinite;
   }
 }
 
 .loading-bar-progress {
   height: 100%;
-  background: linear-gradient(90deg, $terminal-keyword, $terminal-string);
-  border-radius: 2px;
-  transition: width 0.3s ease;
-}
-
-.loading-text {
-  font-size: 1.5rem;
-  color: $secondary-text;
-  font-weight: 500;
-  letter-spacing: 2px;
-
-  .loading-dots {
-    display: inline-block;
-    
-    span {
-      display: inline-block;
-      animation: bounce 1.4s infinite;
-      animation-fill-mode: both;
-      opacity: 0;
-      transform: translateY(0);
-
-      @for $i from 1 through 7 {
-        &:nth-child(#{$i}) {
-          animation-delay: #{$i * 0.2}s;
-        }
-      }
-    }
-  }
+  background: linear-gradient(90deg, $terminal-keyword, $terminal-accent);
+  border-radius: 3px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px rgba($terminal-accent, 0.3);
 }
 
 .particles-container {
@@ -242,23 +182,24 @@ $terminal-comment: #6a9955;
 
 .particle {
   position: absolute;
-  width: 4px;
-  height: 4px;
-  background: $terminal-keyword;
+  width: 3px;
+  height: 3px;
+  background: $terminal-accent;
   border-radius: 50%;
   opacity: 0;
-  animation: float 3s infinite;
-  @include glow-effect($terminal-keyword);
+  animation: float 4s infinite;
+  @include glow-effect($terminal-accent);
 
   @for $i from 1 through 20 {
     &:nth-child(#{$i}) {
       left: random(100) * 1%;
       top: random(100) * 1%;
-      animation-delay: random(3) * -1s;
+      animation-delay: random(4) * -1s;
     }
   }
 }
 
+// Modern animations
 @keyframes rotate {
   from {
     transform: rotate(0deg);
@@ -277,99 +218,20 @@ $terminal-comment: #6a9955;
   }
 }
 
-@keyframes bounce {
-  0%, 80%, 100% {
-    opacity: 0;
-    transform: translateY(0);
-  }
-  40% {
-    opacity: 1;
-    transform: translateY(-10px);
-  }
-}
-
 @keyframes float {
   0% {
     transform: translateY(0) scale(0);
     opacity: 0;
   }
-  50% {
+  20% {
+    opacity: 1;
+  }
+  80% {
     opacity: 1;
   }
   100% {
-    transform: translateY(-100px) scale(1);
+    transform: translateY(-120px) scale(1);
     opacity: 0;
-  }
-}
-
-// Animations
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes connect {
-  0% {
-    transform: scaleX(0);
-    opacity: 0;
-  }
-  50% {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-}
-
-@keyframes radiation {
-  0% {
-    transform: translate(-50%, -50%) scale(0.8);
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1.2);
-    opacity: 0;
-  }
-}
-
-@keyframes particleFloat {
-  0% {
-    transform: translateY(0) scale(0);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100px) scale(1);
-    opacity: 0;
-  }
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
   }
 }
 
@@ -380,4 +242,4 @@ $terminal-comment: #6a9955;
   50% {
     opacity: 0;
   }
-} 
+}
