@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import '../../styles/CommonStyle/_loadingPage.scss';
+import React, { useEffect, useState } from "react";
+import "../../styles/CommonStyle/_loadingPage.scss";
 
 const LoadingPage = () => {
   const [progress, setProgress] = useState(0);
   const [currentLine, setCurrentLine] = useState(0);
 
   const codeLines = [
-    "const app = new Application();",
-    "await app.initialize();",
-    "app.loadResources();",
-    "app.setupComponents();",
-    "app.start();",
-    "// Loading complete"
+    "const app = new Application(); // Summoning the app ",
+    "await app.initialize(); // Warming up the engines... almost there!",
+    " Loading complete ",
   ];
 
   useEffect(() => {
     const progressInterval = setInterval(() => {
-      setProgress(prev => {
+      setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(progressInterval);
           return 100;
@@ -26,7 +23,7 @@ const LoadingPage = () => {
     }, 15);
 
     const lineInterval = setInterval(() => {
-      setCurrentLine(prev => {
+      setCurrentLine((prev) => {
         if (prev >= codeLines.length - 1) {
           clearInterval(lineInterval);
           return prev;
@@ -52,13 +49,15 @@ const LoadingPage = () => {
               <span className="control maximize"></span>
             </div>
           </div>
-          
+
           <div className="terminal-body">
             <div className="code-lines">
               {codeLines.map((line, index) => (
-                <div 
-                  key={index} 
-                  className={`code-line ${index <= currentLine ? 'active' : ''}`}
+                <div
+                  key={index}
+                  className={`code-line ${
+                    index <= currentLine ? "active" : ""
+                  }`}
                 >
                   <span className="line-number">{index + 1}</span>
                   <span className="line-content">{line}</span>
@@ -69,7 +68,7 @@ const LoadingPage = () => {
         </div>
 
         <div className="loading-bar-container">
-          <div 
+          <div
             className="loading-bar-progress"
             style={{ width: `${progress}%` }}
           ></div>
@@ -85,4 +84,4 @@ const LoadingPage = () => {
   );
 };
 
-export default LoadingPage; 
+export default LoadingPage;
