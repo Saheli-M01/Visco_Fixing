@@ -194,14 +194,14 @@
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
   padding: 1rem 0;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
 }
 .navbar.scrolled {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 0.5rem 0;
 }
 .navbar .navbar-brand img {
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease-in-out;
 }
 .navbar .navbar-brand img:hover {
   transform: scale(1.05);
@@ -209,12 +209,16 @@
 .navbar .navbar-toggler {
   border: none;
   padding: 0.5rem;
+  transition: transform 0.3s ease-in-out;
 }
 .navbar .navbar-toggler:focus {
   box-shadow: none;
 }
+.navbar .navbar-toggler:hover {
+  transform: scale(1.1);
+}
 .navbar .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.75)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23ffeebb' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 .navbar .nav-link {
   color: #eaeaea !important;
@@ -222,7 +226,7 @@
   padding: 0.5rem 1rem !important;
   margin: 0 0.25rem;
   position: relative;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease-in-out;
 }
 .navbar .nav-link:hover, .navbar .nav-link.active {
   color: #fcbd00 !important;
@@ -235,11 +239,24 @@
   bottom: 0;
   left: 50%;
   background-color: #fcbd00;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
   transform: translateX(-50%);
 }
 .navbar .nav-link:hover::after, .navbar .nav-link.active::after {
   width: 80%;
+}
+.navbar .navbar-collapse {
+  transition: all 0.3s ease-in-out;
+}
+.navbar .navbar-collapse.collapsing {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.5s ease;
+}
+.navbar .navbar-collapse.show {
+  transition: height 0.5s ease;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(234, 234, 234, 0.1);
 }
 @media (max-width: 992px) {
   .navbar .navbar-collapse {
@@ -248,12 +265,19 @@
     border-radius: 8px;
     margin-top: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .navbar .navbar-collapse.show {
+    opacity: 1;
+    transform: translateY(0);
   }
   .navbar .navbar-collapse .nav-link {
     padding: 0.75rem 1rem !important;
     margin: 0.25rem 0;
     border-radius: 4px;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-in-out;
   }
   .navbar .navbar-collapse .nav-link:hover {
     background: rgba(252, 189, 0, 0.1);
@@ -450,103 +474,103 @@
   box-shadow: 0 0 10px #ddce78;
 }
 .particle:nth-child(1) {
-  left: 88%;
-  top: 23%;
+  left: 29%;
+  top: 65%;
   animation-delay: -3s;
 }
 .particle:nth-child(2) {
-  left: 82%;
-  top: 7%;
-  animation-delay: -2s;
+  left: 13%;
+  top: 30%;
+  animation-delay: -4s;
 }
 .particle:nth-child(3) {
-  left: 59%;
-  top: 59%;
-  animation-delay: -2s;
+  left: 83%;
+  top: 89%;
+  animation-delay: -4s;
 }
 .particle:nth-child(4) {
-  left: 31%;
-  top: 24%;
+  left: 21%;
+  top: 26%;
   animation-delay: -4s;
 }
 .particle:nth-child(5) {
-  left: 26%;
-  top: 25%;
+  left: 6%;
+  top: 61%;
   animation-delay: -4s;
 }
 .particle:nth-child(6) {
-  left: 17%;
-  top: 38%;
-  animation-delay: -3s;
+  left: 55%;
+  top: 36%;
+  animation-delay: -2s;
 }
 .particle:nth-child(7) {
-  left: 79%;
-  top: 37%;
-  animation-delay: -1s;
+  left: 76%;
+  top: 70%;
+  animation-delay: -2s;
 }
 .particle:nth-child(8) {
-  left: 22%;
-  top: 81%;
+  left: 33%;
+  top: 4%;
   animation-delay: -2s;
 }
 .particle:nth-child(9) {
-  left: 91%;
-  top: 78%;
-  animation-delay: -3s;
-}
-.particle:nth-child(10) {
-  left: 96%;
-  top: 66%;
+  left: 88%;
+  top: 23%;
   animation-delay: -1s;
 }
-.particle:nth-child(11) {
-  left: 74%;
-  top: 50%;
+.particle:nth-child(10) {
+  left: 90%;
+  top: 8%;
   animation-delay: -3s;
 }
+.particle:nth-child(11) {
+  left: 6%;
+  top: 7%;
+  animation-delay: -1s;
+}
 .particle:nth-child(12) {
-  left: 7%;
-  top: 46%;
+  left: 82%;
+  top: 91%;
   animation-delay: -1s;
 }
 .particle:nth-child(13) {
-  left: 52%;
-  top: 78%;
+  left: 35%;
+  top: 20%;
   animation-delay: -1s;
 }
 .particle:nth-child(14) {
-  left: 32%;
-  top: 53%;
-  animation-delay: -1s;
-}
-.particle:nth-child(15) {
-  left: 85%;
-  top: 85%;
+  left: 70%;
+  top: 39%;
   animation-delay: -4s;
 }
-.particle:nth-child(16) {
-  left: 42%;
-  top: 80%;
+.particle:nth-child(15) {
+  left: 11%;
+  top: 68%;
   animation-delay: -1s;
 }
+.particle:nth-child(16) {
+  left: 15%;
+  top: 1%;
+  animation-delay: -2s;
+}
 .particle:nth-child(17) {
-  left: 81%;
-  top: 64%;
-  animation-delay: -3s;
+  left: 64%;
+  top: 80%;
+  animation-delay: -2s;
 }
 .particle:nth-child(18) {
-  left: 36%;
-  top: 13%;
+  left: 52%;
+  top: 37%;
   animation-delay: -4s;
 }
 .particle:nth-child(19) {
-  left: 94%;
-  top: 87%;
-  animation-delay: -2s;
+  left: 18%;
+  top: 33%;
+  animation-delay: -4s;
 }
 .particle:nth-child(20) {
-  left: 62%;
-  top: 15%;
+  left: 48%;
+  top: 32%;
   animation-delay: -1s;
 }
 
@@ -718,8 +742,8 @@
     width: 90%;
   }
   #home .right .code-container {
-    height: 20vh !important;
-    max-height: 20vh !important;
+    height: 30vh !important;
+    max-height: 30vh !important;
     font-size: clamp(0.7rem, 1.4vw, 0.8rem);
   }
 }
@@ -729,7 +753,7 @@
   margin: 0;
   padding: 0;
   scrollbar-width: thin;
-  scrollbar-color: #fcbd00 #1a1a1a;
+  scrollbar-color: #ffeebb #1a1a1a;
 }
 
 ::-webkit-scrollbar {
@@ -738,19 +762,19 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #fcbd00;
+  background: #ffeebb;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #fcbd00;
+  background: #ffeebb;
   border-radius: 10px;
-  -webkit-transition: background 0.3s ease ease;
-  transition: background 0.3s ease ease;
+  -webkit-transition: background 0.3s ease-in-out ease;
+  transition: background 0.3s ease-in-out ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #fcbd00;
+  background: #ffeebb;
 }
 
 html, body {
