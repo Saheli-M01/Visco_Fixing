@@ -1,44 +1,61 @@
 // Glow effect mixin
 @mixin glow-effect($color) {
-    box-shadow: 0 0 10px $color;
-  }
-  
-  // Center absolute positioning mixin
-  @mixin center-absolute {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  // Flex center mixin
-  @mixin flex-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  // Animation mixins
-  @mixin fade-in($duration: 0.5s) {
-    animation: fadeIn $duration forwards;
-  }
-  
-  @mixin pulse($color) {
-    animation: pulse 2s infinite;
-    @include glow-effect($color);
-  }
-  
-  @mixin float($delay: 0s) {
-    animation: particleFloat 3s infinite;
-    animation-delay: $delay;
-  }
-  
-  // Responsive mixins
-  @mixin responsive($breakpoint) {
-    @if $breakpoint == tablet {
-      @media (max-width: 768px) { @content; }
+  box-shadow: 0 0 10px $color;
+}
+
+// Center absolute positioning mixin
+@mixin center-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Flex center mixin
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Animation mixins
+@mixin fade-in($duration: 0.5s) {
+  animation: fadeIn $duration forwards;
+}
+
+@mixin pulse($color) {
+  animation: pulse 2s infinite;
+  @include glow-effect($color);
+}
+
+@mixin float($delay: 0s) {
+  animation: particleFloat 3s infinite;
+  animation-delay: $delay;
+}
+
+@mixin slide-up($duration: 0.8s, $timing: ease-out, $delay: 0s) {
+  transform: translateY(20px);
+  opacity: 0;
+  animation: slideUp $duration $timing forwards $delay;
+}
+
+// Responsive mixins
+@mixin responsive($breakpoint) {
+  @if $breakpoint ==small-desktop {
+    @media (max-width: 992px) {
+      @content;
     }
-    @else if $breakpoint == mobile {
-      @media (max-width: 480px) { @content; }
+  }
+
+  @else if $breakpoint ==tablet {
+    @media (max-width: 768px) {
+      @content;
     }
-  } 
+  }
+
+  @else if $breakpoint ==mobile {
+    @media (max-width: 480px) {
+      @content;
+    }
+  }
+}

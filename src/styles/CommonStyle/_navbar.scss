@@ -2,7 +2,7 @@
 @use "../mixins" as *;
 
 .navbar {
-  background: rgba($primary-background, 0.95);
+  background: rgba($primary-background, 0.5);
   backdrop-filter: blur(10px);
   padding: 1rem 0;
   transition: all $transition-fast;
@@ -65,7 +65,7 @@
   }
 
   .navbar-collapse {
-    @include responsive(tablet) {
+    @include responsive(small-desktop) {
       background: rgba($primary-background, 0.98);
       padding: 1rem;
       border-radius: 8px;
