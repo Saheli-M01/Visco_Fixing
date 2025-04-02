@@ -6,6 +6,7 @@ import logo from "../../Assets/Images/Logo/logo.png";
 const NavigationBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [activeLink, setActiveLink] = useState("home");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +22,7 @@ const NavigationBar = () => {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
+    setActiveLink(section);
     setExpanded(false);
   };
 
@@ -33,7 +35,7 @@ const NavigationBar = () => {
     >
       <Container>
         <Navbar.Brand as={HashLink} to="/#home" onClick={() => handleNavClick("home")}>
-          <img src={logo} alt="Visco" height="40" />
+          <img src={logo} alt="Visco" height="50" />
         </Navbar.Brand>
 
         <Navbar.Toggle
@@ -49,7 +51,7 @@ const NavigationBar = () => {
               as={HashLink}
               to="/#home"
               onClick={() => handleNavClick("home")}
-              className="nav-link"
+              className={`nav-link ${activeLink === "home" ? "active" : ""}`}
             >
               Home
             </Nav.Link>
@@ -57,7 +59,7 @@ const NavigationBar = () => {
               as={HashLink}
               to="/#about"
               onClick={() => handleNavClick("about")}
-              className="nav-link"
+              className={`nav-link ${activeLink === "about" ? "active" : ""}`}
             >
               About
             </Nav.Link>
@@ -65,7 +67,7 @@ const NavigationBar = () => {
               as={HashLink}
               to="/#feature"
               onClick={() => handleNavClick("feature")}
-              className="nav-link"
+              className={`nav-link ${activeLink === "feature" ? "active" : ""}`}
             >
               Feature
             </Nav.Link>
@@ -73,7 +75,7 @@ const NavigationBar = () => {
               as={HashLink}
               to="/#topic"
               onClick={() => handleNavClick("topic")}
-              className="nav-link"
+              className={`nav-link ${activeLink === "topic" ? "active" : ""}`}
             >
               Topic
             </Nav.Link>
@@ -81,7 +83,7 @@ const NavigationBar = () => {
               as={HashLink}
               to="/#contact"
               onClick={() => handleNavClick("contact")}
-              className="nav-link"
+              className={`nav-link ${activeLink === "contact" ? "active" : ""}`}
             >
               Contact
             </Nav.Link>

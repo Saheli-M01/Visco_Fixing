@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "variables" as *;
 @use "mixins" as *;
 @use "animations" as *;
@@ -45,7 +46,7 @@
 html, body {
   height: 100%;
   overflow-x: hidden;
-  background-color: darken($primary-background, 2%) !important;
+  background-color: color.adjust($primary-background, $lightness: -2%) !important;
   
 }
 

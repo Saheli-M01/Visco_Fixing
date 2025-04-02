@@ -41,7 +41,8 @@
     position: relative;
     transition: color $transition-fast;
 
-    &:hover {
+    &:hover,
+    &.active {
       color: $dark-yellow !important;
     }
 
@@ -57,7 +58,8 @@
       transform: translateX(-50%);
     }
 
-    &:hover::after {
+    &:hover::after,
+    &.active::after {
       width: 80%;
     }
   }

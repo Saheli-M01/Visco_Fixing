@@ -1,5 +1,7 @@
 @use "../variables" as *;
 @use "../mixins" as *;
+@use "sass:color";
+@use "sass:math";
 
 // Modern terminal theme colors
 $terminal-bg: #0a0a0a;
@@ -14,11 +16,10 @@ $terminal-border: rgba(255, 255, 255, 0.05);
 .loading-container {
   @include flex-center;
   min-height: 100vh;
-  background: linear-gradient(
-    135deg,
-    $terminal-bg 0%,
-    darken($terminal-bg, 3%) 100%
-  );
+  background: linear-gradient(135deg,
+      $terminal-bg 0%,
+
+      color.adjust($terminal-bg, $lightness: -3%));
   position: relative;
   overflow: hidden;
 
@@ -27,11 +28,9 @@ $terminal-border: rgba(255, 255, 255, 0.05);
     position: absolute;
     width: 200%;
     height: 200%;
-    background: radial-gradient(
-      circle at center,
-      rgba($terminal-accent, 0.08) 0%,
-      transparent 70%
-    );
+    background: radial-gradient(circle at center,
+        rgba($terminal-accent, 0.08) 0%,
+        transparent 70%);
     animation: rotate 30s linear infinite;
   }
 }
@@ -155,12 +154,10 @@ $terminal-border: rgba(255, 255, 255, 0.05);
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba($terminal-accent, 0.3),
-      transparent
-    );
+    background: linear-gradient(90deg,
+        transparent,
+        rgba($terminal-accent, 0.3),
+        transparent);
     animation: shimmer 3s infinite;
   }
 }
@@ -192,9 +189,9 @@ $terminal-border: rgba(255, 255, 255, 0.05);
 
   @for $i from 1 through 20 {
     &:nth-child(#{$i}) {
-      left: random(100) * 1%;
-      top: random(100) * 1%;
-      animation-delay: random(4) * -1s;
+      left: math.random(100) * 1%;
+      top: math.random(100) * 1%;
+      animation-delay: math.random(4) * -1s;
     }
   }
 }
@@ -204,6 +201,7 @@ $terminal-border: rgba(255, 255, 255, 0.05);
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -213,6 +211,7 @@ $terminal-border: rgba(255, 255, 255, 0.05);
   0% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(100%);
   }
@@ -223,12 +222,15 @@ $terminal-border: rgba(255, 255, 255, 0.05);
     transform: translateY(0) scale(0);
     opacity: 0;
   }
+
   20% {
     opacity: 1;
   }
+
   80% {
     opacity: 1;
   }
+
   100% {
     transform: translateY(-120px) scale(1);
     opacity: 0;
@@ -236,9 +238,12 @@ $terminal-border: rgba(255, 255, 255, 0.05);
 }
 
 @keyframes blink {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0;
   }
