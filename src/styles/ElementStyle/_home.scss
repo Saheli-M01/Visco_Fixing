@@ -107,26 +107,32 @@
     }
 
     // Responsive styles
-    @include responsive(small-desktop) {
+    @include responsive(large) {
+
+        .right {
+            .code-container {
+                height: 40vh !important;
+                max-height: 40vh !important;
+                font-size: 0.8rem !important;
+            }
+        }
+    }
+    @include responsive(medium) {
         padding-top: 80px;
 
         .left {
             text-align: center;
-            margin-bottom: 3rem;
-
-            h1 {
-                font-size: clamp(2.3rem, 4vw, 2.5rem);
-
-                span {
-                    font-size: clamp(2.3rem, 4vw, 2.5rem);
+            margin-bottom: 1rem;
+            h1{
+                font-size: 2.5rem !important;
+                span{
+                    font-size: 2.7rem !important;
                 }
             }
-
-            h4 {
-                font-size: clamp(1rem, 2vw, 1.1rem);
-
-                span {
-                    font-size: clamp(1.1rem, 2.2vw, 1.2rem);
+            h4{
+                font-size: 1.5rem !important;
+                span{
+                    font-size: 1.7rem !important;
                 }
             }
         }
@@ -135,7 +141,6 @@
             .code-container {
                 height: 40vh !important;
                 max-height: 40vh !important;
-                font-size: clamp(0.8rem, 1.5vw, 0.9rem);
             }
         }
     }
@@ -146,22 +151,6 @@
         .left {
             text-align: center;
             margin-bottom: 3rem;
-
-            h1 {
-                font-size: clamp(2rem, 4vw, 2.3rem);
-
-                span {
-                    font-size: clamp(2rem, 4vw, 2.3rem);
-                }
-            }
-
-            h4 {
-                font-size: clamp(1rem, 2vw, 1.1rem);
-
-                span {
-                    font-size: clamp(1.1rem, 2.2vw, 1.2rem);
-                }
-            }
         }
 
         .right {
@@ -174,24 +163,9 @@
     }
 
     @include responsive(mobile) {
-        .left {
-            h1 {
-                font-size: clamp(1.8rem, 3vw, 2rem);
-
-                span {
-                    font-size: clamp(1.8rem, 3vw, 2rem);
-                }
-            }
-
-            h4 {
-                font-size: clamp(0.9rem, 1.8vw, 1rem);
-
-                span {
-                    font-size: clamp(1rem, 2vw, 1.1rem);
-                }
-            }
-        }
-
+       .container{
+        width:90%;
+       }
         .right {
             .code-container {
                 height: 20vh !important;

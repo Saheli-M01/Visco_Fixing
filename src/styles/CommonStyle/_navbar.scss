@@ -65,7 +65,7 @@
   }
 
   .navbar-collapse {
-    @include responsive(small-desktop) {
+    @include responsive(medium) {
       background: rgba($primary-background, 0.98);
       padding: 1rem;
       border-radius: 8px;
