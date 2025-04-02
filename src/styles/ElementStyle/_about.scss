@@ -1,0 +1,60 @@
+@use '../_shared' as *;
+@use '../variables' as *;
+@use '../mixins' as *;
+
+#about {
+  margin-top: 3rem;
+  padding: 2rem 0;
+  
+  .container {
+    @extend %glass-background;
+  }
+  h1{
+    @extend %h1-style;
+    color: $primary-text;
+  }
+  h4 {
+    @extend %h4-style;
+    color: $light-yellow;
+  }
+  
+  h5 {
+
+    color: $secondary-text;
+    line-height: 2.5rem;
+    font-weight: 400;
+    font-size: get-font-size('large', 'h5');
+    i {
+      color: $dark-yellow;
+    }
+  }
+
+  @include responsive(medium) {
+    h1 {
+      font-size: get-font-size('medium', 'h1') !important;
+    }
+    h4 {
+      font-size: get-font-size('medium', 'h4') !important;
+    }
+    h5 {
+      font-size: get-font-size('medium', 'h5');
+      line-height: 2rem;
+    }
+  }
+
+  @include responsive(mobile) {
+    .container{
+        width:90%;
+       }
+    h1 {
+      font-size: get-font-size('mobile', 'h1') !important;
+    }
+    h4 {
+      font-size: get-font-size('mobile', 'h4') !important;
+    }
+    h5 {
+      font-size: get-font-size('mobile', 'h5');
+      line-height: 1.8rem;
+    }
+  }
+}
