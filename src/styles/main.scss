@@ -19,7 +19,7 @@
   margin: 0;
   padding: 0;
   scrollbar-width: thin; // For Firefox
-  scrollbar-color: $dark-yellow $secondary-background; // Thumb and track colors
+  scrollbar-color: $light-yellow $secondary-background; // Thumb and track colors
 }
 
 // Custom scrollbar
@@ -29,18 +29,18 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: $dark-yellow;
+  background: $light-yellow;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $dark-yellow;
+  background: $light-yellow;
   border-radius: 10px;
   transition: background $transition-fast ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: $dark-yellow;
+  background: $light-yellow;
 }
 
 // Base styles
