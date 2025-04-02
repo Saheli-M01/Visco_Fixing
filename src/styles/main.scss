@@ -2,6 +2,7 @@
 @use "variables" as *;
 @use "mixins" as *;
 @use "animations" as *;
+@use "_shared" as *;
 @use "CommonStyle/_navbar" as *;
 @use "CommonStyle/_backgroundAnimation" as *;
 @use "CommonStyle/_loadingPage" as *;
@@ -47,7 +48,6 @@ html, body {
   height: 100%;
   overflow-x: hidden;
   background-color: color.adjust($primary-background, $lightness: -2%) !important;
-  
 }
 
 // App container
@@ -61,7 +61,6 @@ html, body {
 // Main content
 .main-content {
   flex: 1;
-  padding-top: 80px; // Height of navbar
 }
 
 // Focus states
@@ -72,21 +71,4 @@ html, body {
   outline-offset: 0;
 }
 
-// Responsive styles
-@include responsive(desktop) {
-  html {
-    font-size: 16px;
-  }
-}
 
-@include responsive(tablet) {
-  html {
-    font-size: 15px;
-  }
-}
-
-@include responsive(mobile) {
-  html {
-    font-size: 14px;
-  }
-}

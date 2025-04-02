@@ -1,0 +1,203 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+@use "../_shared" as *;
+@use "../_animations" as *;
+@use "sass:color";
+
+#home {
+    min-height: 100vh;
+    @include flex-center;
+    padding-top: 80px;
+
+    .container {
+        @extend %glass-background;
+
+        .row {
+
+            // Left side content
+            .left {
+                h1 {
+                    @extend %h1-style;
+                    color: $light-yellow;
+
+                    span {
+                        @extend %h1-span-style;
+                        color: $primary-text;
+                    }
+                }
+
+                h4 {
+                    @extend %h4-style;
+                    color: $secondary-text;
+
+                    span {
+                        color: $dark-yellow;
+                        font-weight: 600;
+                        font-size: $font-span-h4;
+                    }
+                }
+
+                button {
+                    @extend %button;
+                    @include slide-up($slide-up-duration, $slide-up-timing, $slide-up-button-delay);
+                }
+            }
+
+
+            // Right side code animation
+            .right {
+                position: relative;
+
+                #toggleAnimation,
+                #skip {
+                    @extend %control-button;
+                }
+
+                #toggleAnimation {
+                    right: 4rem;
+                }
+
+                #skip {
+                    right: 1rem;
+                }
+
+                .code-container {
+                    background: rgba(13, 17, 23, 0.95);
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                    padding: 0 30px;
+                    border-radius: 12px;
+                    color: $primary-text;
+                    font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+                    font-weight: 500;
+                    font-size: $font-code;
+                    width: 100%;
+                    margin-top: 1rem;
+                    overflow: hidden;
+                    height: 60vh;
+                    max-height: 60vh;
+                    position: relative;
+                    @include slide-up($slide-up-duration, $slide-up-timing, $slide-up-delay);
+                    transition: all 0.3s ease;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+
+                    &::before {
+                        content: "• • •";
+                        position: sticky;
+                        top: 0;
+                        left: -30px;
+                        width: calc(100% + 60px);
+                        height: 35px;
+                        background: rgba(30, 34, 40, 0.95);
+                        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                        display: flex;
+                        align-items: center;
+                        padding: 0 15px;
+                        font-size: 20px;
+                        color: rgba(255, 255, 255, 0.5);
+                        letter-spacing: 2px;
+                        border-radius: 12px 12px 0 0;
+                        z-index: 10;
+                        margin: 0 -30px;
+                    }
+                }
+            }
+        }
+    }
+
+    // Responsive styles
+    @include responsive(small-desktop) {
+        padding-top: 80px;
+
+        .left {
+            text-align: center;
+            margin-bottom: 3rem;
+
+            h1 {
+                font-size: clamp(2.3rem, 4vw, 2.5rem);
+
+                span {
+                    font-size: clamp(2.3rem, 4vw, 2.5rem);
+                }
+            }
+
+            h4 {
+                font-size: clamp(1rem, 2vw, 1.1rem);
+
+                span {
+                    font-size: clamp(1.1rem, 2.2vw, 1.2rem);
+                }
+            }
+        }
+
+        .right {
+            .code-container {
+                height: 40vh !important;
+                max-height: 40vh !important;
+                font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+            }
+        }
+    }
+
+    @include responsive(tablet) {
+        padding-top: 80px;
+
+        .left {
+            text-align: center;
+            margin-bottom: 3rem;
+
+            h1 {
+                font-size: clamp(2rem, 4vw, 2.3rem);
+
+                span {
+                    font-size: clamp(2rem, 4vw, 2.3rem);
+                }
+            }
+
+            h4 {
+                font-size: clamp(1rem, 2vw, 1.1rem);
+
+                span {
+                    font-size: clamp(1.1rem, 2.2vw, 1.2rem);
+                }
+            }
+        }
+
+        .right {
+            .code-container {
+                height: 40vh !important;
+                max-height: 40vh !important;
+                font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+            }
+        }
+    }
+
+    @include responsive(mobile) {
+        .left {
+            h1 {
+                font-size: clamp(1.8rem, 3vw, 2rem);
+
+                span {
+                    font-size: clamp(1.8rem, 3vw, 2rem);
+                }
+            }
+
+            h4 {
+                font-size: clamp(0.9rem, 1.8vw, 1rem);
+
+                span {
+                    font-size: clamp(1rem, 2vw, 1.1rem);
+                }
+            }
+        }
+
+        .right {
+            .code-container {
+                height: 20vh !important;
+                max-height: 20vh !important;
+                font-size: clamp(0.7rem, 1.4vw, 0.8rem);
+            }
+        }
+    }
+}

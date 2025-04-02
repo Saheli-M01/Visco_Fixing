@@ -43,7 +43,14 @@ $font-span-h1: 3.2vw;
 $font-h4: 1.5vw;
 $font-span-h4: 2.5vw;
 $font-code: 0.9vw;
+$font-p: 1rem;
 
 // Transitions
 $transition-fast: 0.3s ease;
 $transition-medium: 0.5s ease;
+
+// Animation Variables
+$slide-up-duration: 0.8s;
+$slide-up-timing: ease-out;
+$slide-up-delay: 1s;
+$slide-up-button-delay: 0.6s;
