@@ -48,6 +48,7 @@ html, body {
   height: 100%;
   overflow-x: hidden;
   background-color: color.adjust($primary-background, $lightness: -2%) !important;
+  scroll-behavior: smooth; // Add smooth scrolling behavior
 }
 
 // App container
@@ -70,5 +71,3 @@ html, body {
   outline: 0 !important;
   outline-offset: 0;
 }
-
-
