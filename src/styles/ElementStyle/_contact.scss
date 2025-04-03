@@ -13,7 +13,7 @@
         @extend %glass-background;
         width: 100%;
         max-width: 1200px;
-        margin: 0 auto;
+    
     }
 
     h1 {
@@ -33,7 +33,7 @@
  
         border-radius: 12px;
         padding: 2rem;
-        transition: all 0.3s ease;
+        transition: all 0.3s ease-in-out;
         border: 1px solid rgba(255, 255, 255, 0.03);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
@@ -60,7 +60,7 @@
               display: block;
               width: 100%;
               height: auto;
-              transition: transform 0.3s ease;
+              transition: transform 0.3s ease-in-out;
 
               &:hover {
                 transform: scale(1.02);
@@ -97,7 +97,7 @@
               border-radius: 8px;
               color: $light-yellow;
               text-decoration: none;
-              transition: all 0.3s ease;
+              transition: all 0.3s ease-in-out;
               font-size: clamp(0.9rem, 1.5vw, 1.1rem);
               box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
               white-space: nowrap;
@@ -149,7 +149,7 @@
                 border-radius: 6px;
                 color: $light-yellow;
                 text-decoration: none;
-                transition: all 0.3s ease;
+                transition: all 0.3s ease-in-out;
     
                 i {
                   font-size: clamp(1.1rem, 2vw, 1.2rem);

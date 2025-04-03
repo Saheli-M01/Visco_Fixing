@@ -6,7 +6,8 @@
     min-height: 100vh;
     @include flex-center;
     margin-bottom: 1rem;
-
+    padding-top: 5rem;
+    scroll-margin-top: 5rem;
 
     .container {
         @extend %glass-background;
@@ -318,8 +319,9 @@
       //responsiveness
       
     @include responsive(medium) {
+        padding-top: 4rem;
+        scroll-margin-top: 4rem;
 
-        
         .container {
             width: 95%;
         }
@@ -337,8 +339,9 @@
     }
 
     @include responsive(mobile) {
+        padding-top: 3.5rem;
+        scroll-margin-top: 3.5rem;
 
-        
         .container {
             width: 90%;
         }
