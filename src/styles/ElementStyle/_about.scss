@@ -3,7 +3,7 @@
 @use '../mixins' as *;
 
 #about {
-    min-height: 70vh;
+    min-height: 100vh;
     @include flex-center;
     margin-bottom: 1rem;
 
