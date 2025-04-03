@@ -6,7 +6,7 @@
     min-height: 100vh;
     @include flex-center;
     margin-bottom: 1rem;
-    padding-top: 5rem;
+    padding-top: 1rem;
     scroll-margin-top: 5rem;
 
     .container {
@@ -15,6 +15,9 @@
         max-width: 1400px;
         margin: 0 auto;
         padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     h1 {
@@ -25,16 +28,15 @@
     .row {
         display: flex;
         flex-wrap: wrap;
-        gap: 1.21rem;
+        gap: 1.2rem;
         justify-content: center;
         padding-bottom: 2rem;
         width: 100%;
     }
     .topic-card {
-        flex: 1;
-        min-width: 240px;
-        max-width: 280px;
-        width: 100%;
+        flex: 0 1 calc(20% - 1rem);
+        min-width: 200px;
+        margin: 0;
     
         // Card 1 - Blue
         &:nth-child(1) .card-content {
@@ -318,12 +320,22 @@
       }
       //responsiveness
       
+    @include responsive(large) {
+        .row {
+            gap: 1rem;
+        }
+        .topic-card {
+            flex: 0 1 calc(33.333% - 1rem);
+        }
+    }
+
     @include responsive(medium) {
         padding-top: 4rem;
         scroll-margin-top: 4rem;
 
         .container {
             width: 95%;
+            padding: 1.5rem;
         }
         h1 {
             font-size: get-font-size('medium', 'h1') !important;
@@ -333,8 +345,7 @@
         }
         
         .topic-card {
-            min-width: 220px;
-            max-width: 260px;
+            flex: 0 1 calc(50% - 0.5rem);
         }
     }
 
@@ -344,17 +355,18 @@
 
         .container {
             width: 90%;
+            padding:2rem 1rem;
         }
         h1 {
             font-size: get-font-size('mobile', 'h1') !important;
         }
         .row {
-            gap: 0.8rem;
+            gap: 1rem;
         }
         
         .topic-card {
-            min-width: 200px;
-            max-width: 240px;
+            flex: 0 1 100%;
+            max-width: 280px;
         }
         .card-content {
             .card-name {
