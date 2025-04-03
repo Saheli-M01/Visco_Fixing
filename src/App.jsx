@@ -4,6 +4,7 @@ import BackgroundAnimation from "./components/Common/BackgroundAnimation";
 import LoadingPage from "./components/Common/LoadingPage";
 import Layout from "./components/Layout/Layout";
 import NavigationBar from "./components/Common/Navbar";
+import Footer from "./components/Common/Footer";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -31,6 +32,7 @@ function App() {
           <Layout />
         </main>
       </div>
+      <Footer />
     </Router>
   );
 }

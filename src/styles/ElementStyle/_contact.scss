@@ -3,10 +3,11 @@
 @use '../mixins' as *;
 
 #contact {
-    max-height: 100vh;
+    min-height: 105vh;
+
     @include flex-center;
     margin-bottom: 1rem;
-
+ 
 
     .container {
         @extend %glass-background;
