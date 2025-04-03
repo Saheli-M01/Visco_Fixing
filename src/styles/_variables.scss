@@ -74,8 +74,9 @@ $font-sizes: (
 );
 
 // Function to get responsive font size
+@use "sass:map";
 @function get-font-size($breakpoint, $element) {
-  @return map-get(map-get($font-sizes, $breakpoint), $element);
+  @return map.get(map.get($font-sizes, $breakpoint), $element);
 }
 
 // Transitions

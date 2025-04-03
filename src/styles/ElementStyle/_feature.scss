@@ -3,9 +3,9 @@
 @use '../mixins' as *;
 
 #feature {
-    margin-top: 3rem;
-    padding: 2rem 0;
-
+    min-height: 70vh;
+    @include flex-center;
+    margin-bottom: 1rem;
     .container {
         @extend %glass-background;
     }
@@ -24,12 +24,12 @@
 
         .feature-item {
             background: rgba(20, 20, 20, 0.5);
-            border-radius: 12px;
+            border-radius: 12px 12px 0 0;
             padding: 35px 25px;
             text-align: center;
             position: relative;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.153);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
 
@@ -50,7 +50,7 @@
                 transform: translateY(-3px);
                 border-color: rgba(255, 255, 255, 0.1);
                 box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-
+            
                 &::before {
                     opacity: 0.6;
                 }
@@ -73,7 +73,7 @@
                 left: 0;
                 width: 0;
                 height: 2px;
-                background: rgba(255, 240, 194, 0.2);
+                background: rgba(255, 240, 194, 0.351);
                 transition: width 0.5s ease;
             }
         }

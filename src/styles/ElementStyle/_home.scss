@@ -8,7 +8,7 @@
     min-height: 100vh;
     @include flex-center;
     padding-top: 80px;
-
+    margin-bottom: 1rem;
     .container {
         @extend %glass-background;
 

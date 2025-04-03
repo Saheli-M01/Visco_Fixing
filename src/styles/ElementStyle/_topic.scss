@@ -1,0 +1,361 @@
+@use '../_shared' as *;
+@use '../variables' as *;
+@use '../mixins' as *;
+
+#topic {
+    min-height: 70vh;
+    @include flex-center;
+    margin-bottom: 1rem;
+    padding: 4rem 0;
+
+    .container {
+        @extend %glass-background;
+       
+    }
+
+    h1 {
+        @extend %h1-style;
+        color: $primary-text;
+        margin-bottom: 2rem;
+    }
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.21rem;
+        justify-content: center;
+        padding-bottom: 2rem;
+
+      }
+      .topic-card {
+        flex: 1;
+        min-width: 240px;
+        max-width: 280px;
+    
+        // Card 1 - Blue
+        &:nth-child(1) .card-content {
+          @include card-base-style;
+          border-color: $light-blue;
+    
+          p, button {
+            color: $light-blue;
+          }
+          button {
+            border: 2px solid $light-blue;
+            background: transparent;
+          }
+          &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+    
+            .card-name {
+              color: $light-blue;
+            }
+            p {
+              color: $primary-text;
+            }
+            button {
+              background: $light-blue;
+              color: $primary-background;
+              border: 2px solid $light-blue;
+            }
+            .icon-container img {
+              filter: brightness(0) saturate(100%);
+              opacity: 0.9;
+            }
+          }
+        }
+        
+        // Card 2 - Violet
+        &:nth-child(2) .card-content {
+          @include card-base-style;
+          border-color: $light-violet;
+    
+          p, button {
+            color: $light-violet;
+          }
+          button {
+            border: 2px solid $light-violet;
+            background: transparent;
+          }
+          &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+    
+            .card-name {
+              color: $light-violet;
+            }
+            p {
+              color: $primary-text;
+            }
+            button {
+              background: $light-violet;
+              color: $primary-background;
+              border: 2px solid $light-violet;
+            }
+            .icon-container img {
+              filter: brightness(0) saturate(100%);
+              opacity: 0.9;
+            }
+          }
+        }
+        
+        // Card 3 - Red
+        &:nth-child(3) .card-content {
+          @include card-base-style;
+          border-color: $light-red;
+    
+          p, button {
+            color: $light-red;
+          }
+          button {
+            border: 2px solid $light-red;
+            background: transparent;
+          }
+          &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+    
+            .card-name {
+              color: $light-red;
+            }
+            p {
+              color: $primary-text;
+            }
+            button {
+              background: $light-red;
+              color: $primary-background;
+              border: 2px solid $light-red;
+            }
+            .icon-container img {
+              filter: brightness(0) saturate(100%);
+              opacity: 0.9;
+            }
+          }
+        }
+        
+        // Card 4 - Green
+        &:nth-child(4) .card-content {
+          @include card-base-style;
+          border-color: $light-green;
+    
+          p, button {
+            color: $light-green;
+          }
+          button {
+            border: 2px solid $light-green;
+            background: transparent;
+          }
+          &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+    
+            .card-name {
+              color: $light-green;
+            }
+            p {
+              color: $primary-text;
+            }
+            button {
+              background: $light-green;
+              color: $primary-background;
+              border: 2px solid $light-green;
+            }
+            .icon-container img {
+              filter: brightness(0) saturate(100%);
+              opacity: 0.9;
+            }
+          }
+        }
+        
+        // Card 5 - Orange
+        &:nth-child(5) .card-content {
+          @include card-base-style;
+          border-color: $light-orange;
+    
+          p, button {
+            color: $light-orange;
+          }
+          button {
+            border: 2px solid $light-orange;
+            background: transparent;
+          }
+          &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+    
+            .card-name {
+              color: $light-orange;
+            }
+            p {
+              color: $primary-text;
+            }
+            button {
+              background: $light-orange;
+              color: $primary-background;
+              border: 2px solid $light-orange;
+            }
+            .icon-container img {
+              filter: brightness(0) saturate(100%);
+              opacity: 0.9;
+            }
+          }
+        }
+    
+        &:nth-child(1) .card-content .icon-container img {
+          filter: brightness(0) saturate(100%) invert(83%) sepia(11%)
+            saturate(1122%) hue-rotate(190deg) brightness(103%) contrast(96%);
+          transition: filter 0.3s ease;
+        }
+        &:nth-child(1) .card-content:hover .icon-container img {
+          filter: brightness(0) saturate(100%) invert(83%) sepia(11%)
+            saturate(1122%) hue-rotate(190deg) brightness(90%) contrast(110%);
+        }
+        
+        &:nth-child(2) .card-content .icon-container img {
+          filter: brightness(0) saturate(100%) invert(87%) sepia(9%)
+            saturate(1023%) hue-rotate(220deg) brightness(103%) contrast(95%);
+          transition: filter 0.3s ease;
+        }
+        &:nth-child(2) .card-content:hover .icon-container img {
+          filter: brightness(0) saturate(100%) invert(87%) sepia(9%)
+            saturate(1023%) hue-rotate(220deg) brightness(90%) contrast(110%);
+        }
+        
+        &:nth-child(3) .card-content .icon-container img {
+          filter: brightness(0) saturate(100%) invert(75%) sepia(51%)
+            saturate(499%) hue-rotate(320deg) brightness(104%) contrast(101%);
+          transition: filter 0.3s ease;
+        }
+        &:nth-child(3) .card-content:hover .icon-container img {
+          filter: brightness(0) saturate(100%) invert(75%) sepia(51%)
+            saturate(499%) hue-rotate(320deg) brightness(90%) contrast(110%);
+        }
+        
+        &:nth-child(4) .card-content .icon-container img {
+          filter: brightness(0) saturate(100%) invert(90%) sepia(10%)
+            saturate(567%) hue-rotate(90deg) brightness(102%) contrast(96%);
+          transition: filter 0.3s ease;
+        }
+        &:nth-child(4) .card-content:hover .icon-container img {
+          filter: brightness(0) saturate(100%) invert(90%) sepia(10%)
+            saturate(567%) hue-rotate(90deg) brightness(85%) contrast(110%);
+        }
+        
+        &:nth-child(5) .card-content .icon-container img {
+          filter: brightness(0) saturate(100%) invert(89%) sepia(18%) saturate(669%) hue-rotate(332deg) brightness(103%) contrast(101%);
+          transition: filter 0.3s ease;
+        }
+        &:nth-child(5) .card-content:hover .icon-container img {
+          filter: brightness(0) saturate(100%) invert(89%) sepia(18%) saturate(669%) hue-rotate(332deg) brightness(103%) contrast(101%);
+        }
+    
+        .card-content {
+          .icon-container {
+            position: relative;
+            width: 100%;
+            height: 60px;
+            margin-bottom: 10px;
+            display: grid;
+            justify-items: center;
+    
+            img {
+              width: 60px;
+              height: 60px;
+              object-fit: contain;
+              transition: transform 0.3s ease;
+            }
+          }
+    
+          .card-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: $primary-text;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+          }
+    
+          p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            opacity: 0.8;
+          }
+    
+          button {
+            width: 9rem;
+            position: relative;
+            top: 20px;
+            text-transform: uppercase;
+            font-size: 15px;
+            border-radius: 0;
+            padding: 10px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            
+            i {
+              margin-left: 5px;
+            }
+          }
+        }
+      }
+      //responsiveness
+      
+    @include responsive(medium) {
+        h1 {
+            font-size: get-font-size('medium', 'h1') !important;
+        }
+        .container {
+            width: 95%;
+        }
+        .row {
+            gap: 1rem;
+        }
+        .topic-card {
+            min-width: 220px;
+            max-width: 260px;
+        }
+    }
+
+    @include responsive(mobile) {
+        .container {
+            width: 90%;
+        }
+
+        h1 {
+            font-size: get-font-size('mobile', 'h1') !important;
+        }
+        .row {
+            gap: 0.8rem;
+        }
+        .topic-card {
+            min-width: 200px;
+            max-width: 240px;
+        }
+        .card-content {
+            .card-name {
+                font-size: 1.3rem;
+            }
+            p {
+                font-size: 0.9rem;
+            }
+            button {
+                width: 8rem;
+                top: 15px;
+                font-size: 14px;
+            }
+        }
+    }
+    }

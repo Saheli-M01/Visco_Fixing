@@ -3,8 +3,9 @@
 @use '../mixins' as *;
 
 #about {
-    margin-top: 3rem;
-    padding: 2rem 0;
+    min-height: 70vh;
+    @include flex-center;
+    margin-bottom: 1rem;
 
     .container {
         @extend %glass-background;
