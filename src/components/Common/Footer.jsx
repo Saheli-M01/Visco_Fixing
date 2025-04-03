@@ -41,14 +41,8 @@ const Footer = () => {
           <div className="footer-contact">
             <h3>Connect</h3>
             <div className="social-links">
-              <a href="https://github.com/your-github" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                <FaGithub />
-              </a>
-              <a href="https://linkedin.com/in/your-linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/in/saheli-mondal-b9387729b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                 <FaLinkedin />
-              </a>
-              <a href="https://twitter.com/your-twitter" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                <FaTwitter />
               </a>
               <a href="mailto:visualizecode.official@gmail.com" aria-label="Email">
                 <FaEnvelope />

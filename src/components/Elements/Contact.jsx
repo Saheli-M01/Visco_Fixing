@@ -10,26 +10,27 @@ const Contact = () => {
         <div className="contact-card">
           <div className="contact-info">
             <div className="photo-section">
-              <img 
-                src={laptopImage} 
-                alt="Visco Team" 
+              <img
+                src={laptopImage}
+                alt="Visco Team"
                 className="contact-photo"
               />
             </div>
-            
+
             <div className="contact-details">
               <h2>Contact Us</h2>
               <p className="contact-description">
-                Have a question or want to suggest anything? Reach out via email or LinkedIn and we'll get back to you as soon as possible.
+                Have a question or want to suggest anything? Reach out via email
+                or LinkedIn and we'll get back to you as soon as possible.
               </p>
-              <a 
-                href="mailto:visualizecode.official@gmail.com" 
+              <a
+                href="mailto:visualizecode.official@gmail.com"
                 className="email-link"
               >
                 <i className="fas fa-envelope"></i>
                 <span>visualizecode.official@gmail.com</span>
               </a>
-              
+
               <div className="social-link">
                 <p>Connect with us on LinkedIn:</p>
                 <a
