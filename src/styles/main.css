@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;500;600;700&display=swap");
@@ -495,104 +496,104 @@
   box-shadow: 0 0 10px #ddce78;
 }
 .particle:nth-child(1) {
-  left: 53%;
-  top: 39%;
+  left: 31%;
+  top: 99%;
   animation-delay: -1s;
 }
 .particle:nth-child(2) {
-  left: 28%;
-  top: 23%;
-  animation-delay: -4s;
-}
-.particle:nth-child(3) {
-  left: 100%;
-  top: 86%;
-  animation-delay: -3s;
-}
-.particle:nth-child(4) {
-  left: 8%;
-  top: 60%;
+  left: 51%;
+  top: 88%;
   animation-delay: -1s;
 }
+.particle:nth-child(3) {
+  left: 97%;
+  top: 59%;
+  animation-delay: -1s;
+}
+.particle:nth-child(4) {
+  left: 100%;
+  top: 59%;
+  animation-delay: -2s;
+}
 .particle:nth-child(5) {
-  left: 2%;
-  top: 16%;
+  left: 31%;
+  top: 18%;
   animation-delay: -3s;
 }
 .particle:nth-child(6) {
-  left: 47%;
-  top: 31%;
-  animation-delay: -4s;
+  left: 69%;
+  top: 61%;
+  animation-delay: -1s;
 }
 .particle:nth-child(7) {
-  left: 59%;
-  top: 94%;
-  animation-delay: -2s;
+  left: 4%;
+  top: 73%;
+  animation-delay: -4s;
 }
 .particle:nth-child(8) {
-  left: 16%;
-  top: 9%;
-  animation-delay: -1s;
+  left: 19%;
+  top: 40%;
+  animation-delay: -3s;
 }
 .particle:nth-child(9) {
-  left: 58%;
-  top: 41%;
-  animation-delay: -1s;
+  left: 51%;
+  top: 22%;
+  animation-delay: -4s;
 }
 .particle:nth-child(10) {
-  left: 63%;
-  top: 57%;
+  left: 52%;
+  top: 78%;
   animation-delay: -4s;
 }
 .particle:nth-child(11) {
-  left: 24%;
-  top: 28%;
-  animation-delay: -2s;
+  left: 69%;
+  top: 13%;
+  animation-delay: -4s;
 }
 .particle:nth-child(12) {
-  left: 60%;
-  top: 46%;
-  animation-delay: -3s;
+  left: 6%;
+  top: 12%;
+  animation-delay: -4s;
 }
 .particle:nth-child(13) {
-  left: 61%;
-  top: 41%;
+  left: 88%;
+  top: 74%;
   animation-delay: -2s;
 }
 .particle:nth-child(14) {
-  left: 76%;
-  top: 92%;
-  animation-delay: -2s;
+  left: 93%;
+  top: 72%;
+  animation-delay: -4s;
 }
 .particle:nth-child(15) {
-  left: 15%;
-  top: 10%;
-  animation-delay: -1s;
+  left: 66%;
+  top: 68%;
+  animation-delay: -3s;
 }
 .particle:nth-child(16) {
-  left: 3%;
-  top: 57%;
-  animation-delay: -2s;
+  left: 46%;
+  top: 67%;
+  animation-delay: -4s;
 }
 .particle:nth-child(17) {
-  left: 94%;
-  top: 4%;
+  left: 12%;
+  top: 43%;
   animation-delay: -3s;
 }
 .particle:nth-child(18) {
-  left: 73%;
-  top: 29%;
+  left: 10%;
+  top: 86%;
   animation-delay: -2s;
 }
 .particle:nth-child(19) {
-  left: 94%;
-  top: 6%;
-  animation-delay: -4s;
+  left: 49%;
+  top: 14%;
+  animation-delay: -1s;
 }
 .particle:nth-child(20) {
-  left: 55%;
-  top: 32%;
-  animation-delay: -2s;
+  left: 83%;
+  top: 34%;
+  animation-delay: -1s;
 }
 
 @keyframes rotate {
@@ -633,6 +634,55 @@
   }
   50% {
     opacity: 0;
+  }
+}
+.back-to-top {
+  position: fixed;
+  bottom: 55px;
+  right: 30px;
+  width: 35px;
+  height: 35px;
+  background: rgb(8, 8, 8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid #fcbd00;
+  border-radius: 50%;
+  color: #fcbd00;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 999;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.back-to-top:hover {
+  background: #ffeebb;
+  color: #0c0c0c;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+.back-to-top:active {
+  transform: translateY(0);
+}
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .back-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+  }
+  .back-to-top i {
+    font-size: 1.1rem;
   }
 }
 #home {
@@ -801,15 +851,19 @@
 }
 
 html, body {
-  height: 100%;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
   background-color: #070707 !important;
+  scroll-behavior: smooth;
 }
 
 .app-container {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  overflow-y: auto;
 }
 
 .main-content {
