@@ -9,11 +9,11 @@ import sort from "../../Assets/Images/Topic/sort.svg";
 
 
 const topics = [
-  { name: "Array", imgSrc: array, route: "/topic/array" },
-  { name: "Tree", imgSrc: tree, route: "/topic/tree" },
-  { name: "Graph", imgSrc: graph, route: "/topic/graph" },
-  { name: "Linked List", imgSrc: linkedList, route: "/topic/linkedList" },
-  { name: "Sorting", imgSrc: sort, route: "/topic/sort" },
+  { name: "Array", imgSrc: array, route: "/components/Elements/Topics/Array/Array" },
+  { name: "Tree", imgSrc: tree, route: "/components/Elements/Topics/Tree/Tree" },
+  { name: "Graph", imgSrc: graph, route: "/components/Elements/Topics/Graph/Graph" },
+  { name: "Linked List", imgSrc: linkedList, route: "/components/Elements/Topics/LinkedList/LinkedList" },
+  { name: "Sorting", imgSrc: sort, route: "/components/Elements/Topics/Sort/Sort" },
 ];
 
 const TopicSection = () => {
