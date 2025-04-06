@@ -7,13 +7,12 @@ import graph from "../../Assets/Images/Topic/graph.svg";
 import linkedList from "../../Assets/Images/Topic/linked-list.svg";
 import sort from "../../Assets/Images/Topic/sort.svg";
 
-
 const topics = [
-  { name: "Array", imgSrc: array, route: "/components/Elements/Topics/Array/Array" },
-  { name: "Tree", imgSrc: tree, route: "/components/Elements/Topics/Tree/Tree" },
-  { name: "Graph", imgSrc: graph, route: "/components/Elements/Topics/Graph/Graph" },
-  { name: "Linked List", imgSrc: linkedList, route: "/components/Elements/Topics/LinkedList/LinkedList" },
-  { name: "Sorting", imgSrc: sort, route: "/components/Elements/Topics/Sort/Sort" },
+  { name: "Array", imgSrc: array, route: "/Array" },
+  { name: "Tree", imgSrc: tree, route: "/Tree" },
+  { name: "Graph", imgSrc: graph, route: "/Graph" },
+  { name: "Linked List", imgSrc: linkedList, route: "/LinkedList" },
+  { name: "Sorting", imgSrc: sort, route: "/Sort" },
 ];
 
 const TopicSection = () => {
@@ -30,14 +29,17 @@ const TopicSection = () => {
         <h1 className="text-center">Explore Topics</h1>
         <div className="row">
           {topics.map((topic, index) => (
-            <div key={index} className="col-lg-3 col-md-6 col-sm-12 topic-card mt-2">
+            <div
+              key={index}
+              className="col-lg-3 col-md-6 col-sm-12 topic-card mt-2"
+            >
               <div className="card-content">
                 <div className="icon-container">
                   <img src={topic.imgSrc} alt={topic.name} />
                 </div>
                 <p className="card-name">{topic.name}</p>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="btn btn-outline"
                   onClick={() => handleNavigation(topic.route)}
                 >
