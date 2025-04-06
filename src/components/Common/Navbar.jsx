@@ -13,10 +13,33 @@ const NavigationBar = () => {
   const isHomePage = location.pathname === "/";
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+      
+      // Only run section detection on homepage
+      if (isHomePage) {
+        const sections = ["home", "about", "feature", "topic", "contact"];
+        const headerOffset = 100; // Adjust this value based on your navbar height
+        
+        for (const section of sections) {
+          const element = document.getElementById(section);
+          if (element) {
+            const elementTop = element.offsetTop - headerOffset;
+            const elementBottom = elementTop + element.offsetHeight;
+            const scrollPosition = window.scrollY;
+            
+            if (scrollPosition >= elementTop && scrollPosition < elementBottom) {
+              setActiveLink(section);
+              break;
+            }
+          }
+        }
+      }
+    };
+    
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isHomePage]);
 
   const handleNavClick = (section) => {
     if (isHomePage) {
@@ -52,6 +75,16 @@ const NavigationBar = () => {
     setActiveLink(section);
     setExpanded(false);
   };
+
+  // Set initial active link based on URL hash when component mounts
+  useEffect(() => {
+    if (isHomePage && window.location.hash) {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        setActiveLink(hash);
+      }
+    }
+  }, [isHomePage]);
 
   return (
     <Navbar
