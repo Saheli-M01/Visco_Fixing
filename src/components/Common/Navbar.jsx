@@ -8,27 +8,36 @@ const NavigationBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [activeLink, setActiveLink] = useState("home");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === "/";
 
+  const toggleDropdown = (e) => {
+    e.stopPropagation();
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-      
+
       // Only run section detection on homepage
       if (isHomePage) {
         const sections = ["home", "about", "feature", "topic", "contact"];
         const headerOffset = 100; // Adjust this value based on your navbar height
-        
+
         for (const section of sections) {
           const element = document.getElementById(section);
           if (element) {
             const elementTop = element.offsetTop - headerOffset;
             const elementBottom = elementTop + element.offsetHeight;
             const scrollPosition = window.scrollY;
-            
-            if (scrollPosition >= elementTop && scrollPosition < elementBottom) {
+
+            if (
+              scrollPosition >= elementTop &&
+              scrollPosition < elementBottom
+            ) {
               setActiveLink(section);
               break;
             }
@@ -36,7 +45,7 @@ const NavigationBar = () => {
         }
       }
     };
-    
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isHomePage]);
@@ -47,11 +56,12 @@ const NavigationBar = () => {
       if (element) {
         const headerOffset = 80;
         const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        const offsetPosition =
+          elementPosition + window.pageYOffset - headerOffset;
 
         window.scrollTo({
           top: offsetPosition,
-          behavior: "smooth"
+          behavior: "smooth",
         });
       }
     } else {
@@ -63,11 +73,12 @@ const NavigationBar = () => {
         if (element) {
           const headerOffset = 80;
           const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          const offsetPosition =
+            elementPosition + window.pageYOffset - headerOffset;
 
           window.scrollTo({
             top: offsetPosition,
-            behavior: "smooth"
+            behavior: "smooth",
           });
         }
       }, 100);
@@ -79,12 +90,26 @@ const NavigationBar = () => {
   // Set initial active link based on URL hash when component mounts
   useEffect(() => {
     if (isHomePage && window.location.hash) {
-      const hash = window.location.hash.replace('#', '');
+      const hash = window.location.hash.replace("#", "");
       if (hash) {
         setActiveLink(hash);
       }
     }
   }, [isHomePage]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isDropdownOpen && !event.target.closest(".nav-link")) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
 
   return (
     <Navbar
@@ -130,6 +155,69 @@ const NavigationBar = () => {
               className={`nav-link ${activeLink === "topic" ? "active" : ""}`}
             >
               Topic
+              <button
+                id="dropdown"
+                className={`dropdown-toggle-btn ps-2 ${
+                  isDropdownOpen ? "active" : ""
+                }`}
+                onClick={toggleDropdown}
+              >
+                <i
+                  className={`fas ${
+                    isDropdownOpen ? "fa-chevron-up" : "fa-chevron-down"
+                  }`}
+                ></i>
+              </button>
+              {/* Dropdown Menu */}
+              {isDropdownOpen && (
+                <ul className="dropdown-menu show">
+                  <li>
+                    <Link
+                      className="dropdown-item"
+                      to="/topic/array"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Array
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="dropdown-item"
+                      to="/topic/tree"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Tree
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="dropdown-item"
+                      to="/topic/graph"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Graph
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="dropdown-item"
+                      to="/topic/linkedList"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Linked List
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="dropdown-item"
+                      to="/topic/sort"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      Sorting
+                    </Link>
+                  </li>
+                </ul>
+              )}
             </Nav.Link>
             <Nav.Link
               onClick={() => handleNavClick("contact")}

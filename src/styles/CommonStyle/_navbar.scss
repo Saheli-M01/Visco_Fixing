@@ -46,6 +46,8 @@
     margin: 0 0.25rem;
     position: relative;
     transition: all $transition-fast;
+    display: flex;
+    align-items: center;
 
     &:hover,
     &.active {
@@ -88,6 +90,59 @@
 
       &::after {
         display: none;
+      }
+    }
+  }
+
+  // Custom dropdown styling
+  .dropdown-toggle-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0 0 0 0.5rem;
+    cursor: pointer;
+    transition: all $transition-fast;
+    
+    i {
+      transition: transform $transition-fast;
+    }
+    
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba($primary-background, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba($light-yellow, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    min-width: 220px;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
+    
+    li {
+      list-style: none;
+      
+      .dropdown-item {
+        color: $primary-text;
+        padding: 0.75rem 1rem;
+        border-radius: 4px;
+        transition: all $transition-fast;
+        display: block;
+        text-decoration: none;
+        
+        &:hover, &:focus {
+          background: rgba($dark-yellow, 0.1);
+          color: $dark-yellow;
+        }
+        
+        &:active {
+          background: rgba($dark-yellow, 0.2);
+        }
       }
     }
   }
@@ -135,6 +190,37 @@
           display: none;
         }
       }
+      
+      // Mobile dropdown styling
+      .dropdown-menu {
+        position: static;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        animation: none;
+        
+        li .dropdown-item {
+          padding: 0.5rem 1.5rem;
+          
+          &:hover, &:focus {
+            background: rgba($dark-yellow, 0.1);
+          }
+        }
+      }
     }
+  }
+}
+
+// Animation for dropdown
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
