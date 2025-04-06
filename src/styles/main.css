@@ -180,10 +180,30 @@
   font-size: 2.8vw;
   font-weight: 700;
 }
+@media (max-width: 992px) {
+  #home .container .row .left h1 {
+    font-size: 2.2rem !important;
+  }
+}
+@media (max-width: 576px) {
+  #home .container .row .left h1 {
+    font-size: 2rem !important;
+  }
+}
 
 #home .container .row .left h1 span {
   font-family: "Josefin Sans", sans-serif;
   font-size: 3.2vw;
+}
+@media (max-width: 992px) {
+  #home .container .row .left h1 span {
+    font-size: 2.4rem !important;
+  }
+}
+@media (max-width: 576px) {
+  #home .container .row .left h1 span {
+    font-size: 2.2rem !important;
+  }
 }
 
 #home .container .row .left h4 {
@@ -191,6 +211,21 @@
   font-size: 1.5vw;
   line-height: 1.6;
   color: #c2c2c2;
+}
+@media (max-width: 992px) {
+  #home .container .row .left h4 {
+    font-size: 1.3rem !important;
+  }
+}
+
+#home .container .row .left h4 span {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 2.5vw;
+}
+@media (max-width: 992px) {
+  #home .container .row .left h4 span {
+    font-size: 1.5rem !important;
+  }
 }
 
 .navbar {
@@ -569,103 +604,103 @@
 }
 .particle:nth-child(1) {
   left: 45%;
-  top: 73%;
-  animation-delay: -1s;
+  top: 14%;
+  animation-delay: -3s;
 }
 .particle:nth-child(2) {
-  left: 32%;
-  top: 38%;
-  animation-delay: -3s;
+  left: 21%;
+  top: 55%;
+  animation-delay: -4s;
 }
 .particle:nth-child(3) {
-  left: 81%;
-  top: 75%;
-  animation-delay: -4s;
-}
-.particle:nth-child(4) {
-  left: 16%;
-  top: 25%;
-  animation-delay: -4s;
-}
-.particle:nth-child(5) {
-  left: 48%;
-  top: 46%;
-  animation-delay: -1s;
-}
-.particle:nth-child(6) {
-  left: 53%;
-  top: 14%;
-  animation-delay: -4s;
-}
-.particle:nth-child(7) {
-  left: 56%;
-  top: 61%;
-  animation-delay: -2s;
-}
-.particle:nth-child(8) {
-  left: 66%;
-  top: 42%;
-  animation-delay: -2s;
-}
-.particle:nth-child(9) {
-  left: 26%;
-  top: 46%;
-  animation-delay: -1s;
-}
-.particle:nth-child(10) {
-  left: 63%;
-  top: 86%;
-  animation-delay: -2s;
-}
-.particle:nth-child(11) {
-  left: 60%;
-  top: 36%;
-  animation-delay: -2s;
-}
-.particle:nth-child(12) {
-  left: 26%;
-  top: 90%;
-  animation-delay: -2s;
-}
-.particle:nth-child(13) {
-  left: 38%;
-  top: 7%;
-  animation-delay: -4s;
-}
-.particle:nth-child(14) {
-  left: 7%;
-  top: 6%;
-  animation-delay: -2s;
-}
-.particle:nth-child(15) {
-  left: 48%;
-  top: 53%;
+  left: 1%;
+  top: 95%;
   animation-delay: -3s;
 }
-.particle:nth-child(16) {
-  left: 50%;
-  top: 20%;
+.particle:nth-child(4) {
+  left: 28%;
+  top: 5%;
+  animation-delay: -3s;
+}
+.particle:nth-child(5) {
+  left: 68%;
+  top: 62%;
   animation-delay: -4s;
 }
-.particle:nth-child(17) {
-  left: 79%;
-  top: 91%;
-  animation-delay: -2s;
+.particle:nth-child(6) {
+  left: 85%;
+  top: 40%;
+  animation-delay: -3s;
 }
-.particle:nth-child(18) {
-  left: 35%;
+.particle:nth-child(7) {
+  left: 31%;
+  top: 21%;
+  animation-delay: -4s;
+}
+.particle:nth-child(8) {
+  left: 31%;
+  top: 38%;
+  animation-delay: -4s;
+}
+.particle:nth-child(9) {
+  left: 41%;
+  top: 41%;
+  animation-delay: -3s;
+}
+.particle:nth-child(10) {
+  left: 76%;
+  top: 33%;
+  animation-delay: -4s;
+}
+.particle:nth-child(11) {
+  left: 77%;
   top: 28%;
   animation-delay: -3s;
 }
+.particle:nth-child(12) {
+  left: 46%;
+  top: 8%;
+  animation-delay: -1s;
+}
+.particle:nth-child(13) {
+  left: 65%;
+  top: 81%;
+  animation-delay: -2s;
+}
+.particle:nth-child(14) {
+  left: 83%;
+  top: 72%;
+  animation-delay: -1s;
+}
+.particle:nth-child(15) {
+  left: 43%;
+  top: 64%;
+  animation-delay: -3s;
+}
+.particle:nth-child(16) {
+  left: 70%;
+  top: 17%;
+  animation-delay: -3s;
+}
+.particle:nth-child(17) {
+  left: 13%;
+  top: 37%;
+  animation-delay: -3s;
+}
+.particle:nth-child(18) {
+  left: 48%;
+  top: 80%;
+  animation-delay: -2s;
+}
 .particle:nth-child(19) {
-  left: 63%;
-  top: 87%;
+  left: 46%;
+  top: 23%;
   animation-delay: -3s;
 }
 .particle:nth-child(20) {
-  left: 50%;
-  top: 60%;
-  animation-delay: -1s;
+  left: 48%;
+  top: 34%;
+  animation-delay: -4s;
 }
 
 @keyframes rotate {
@@ -777,8 +812,6 @@
 }
 #home .container .row .left h4 span {
   color: #fcbd00;
-  font-weight: 600;
-  font-size: 2.5vw;
 }
 #home .container .row .left button {
   transform: translateY(20px);
@@ -850,18 +883,6 @@
   #home .left {
     text-align: center;
     margin-bottom: 1rem;
-  }
-  #home .left h1 {
-    font-size: 2.2rem !important;
-  }
-  #home .left h1 span {
-    font-size: 2.4rem !important;
-  }
-  #home .left h4 {
-    font-size: 1.3rem !important;
-  }
-  #home .left h4 span {
-    font-size: 1.5rem !important;
   }
   #home .right .code-container {
     height: 40vh !important;

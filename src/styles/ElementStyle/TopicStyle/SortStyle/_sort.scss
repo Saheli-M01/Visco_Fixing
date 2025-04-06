@@ -1,0 +1,7 @@
+@use "../../../_shared" as *;
+@use "../../../mixins" as *;
+@use "../../../variables" as *;
+
+#sorting {
+  @include topic-element-section($light-orange, $medium-orange);
+}

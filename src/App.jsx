@@ -41,6 +41,11 @@ const AppContent = () => {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Layout />} />
+            <Route path="/topic/sort" element={<Sort />} />
+            <Route path="/topic/array" element={<Array />} />
+            <Route path="/topic/graph" element={<Graph />} />
+            <Route path="/topic/tree" element={<Tree />} />
+            <Route path="/topic/linkedlist" element={<LinkedList />} />
             <Route path="/sort" element={<Sort />} />
             <Route path="/array" element={<Array />} />
             <Route path="/graph" element={<Graph />} />
