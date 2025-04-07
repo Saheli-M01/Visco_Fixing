@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../../../styles/ElementStyle/TopicStyle/SortStyle/_sort.scss";
-// import SortingVisualizer from "./SortingVisualizer";
+import SortingVisualizer from "./SortingVisualizer";
 
 const sortingAlgorithms = [
   // Comparison-Based Algorithms

@@ -4,13 +4,5 @@
 
 #sorting {
   @include topic-element-section($light-orange, $medium-orange);
-  
-  // .algorithm-category {
-  //   @extend %h4-style;
-  //   color: $primary-text;
-  //   margin-top: 2rem;
-  //   margin-bottom: 1.5rem;
-  //   padding-bottom: 0.5rem;
-  //   border-bottom: 1px solid rgba($secondary-text, 0.2);
-  // }
+
 }

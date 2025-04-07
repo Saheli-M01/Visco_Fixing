@@ -1,0 +1,236 @@
+@use "../../../_shared" as *;
+@use "../../../mixins" as *;
+@use "../../../variables" as *;
+
+.visualizer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.visualizer-container {
+  width: 100%;
+  max-width: 1400px;
+  height: 90vh;
+  background: linear-gradient(to bottom, #1a1a1a, #0c0c0c);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    h2 {
+      color: $light-orange;
+      font-size: 1.8rem;
+      margin: 0;
+    }
+
+    .refresh-button,
+    .close-button {
+      background: transparent;
+      border: none;
+      color: $secondary-text;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: $primary-text;
+        background: rgba(255, 255, 255, 0.05);
+      }
+    }
+
+    .close-button {
+      font-size: 1.4rem;
+      
+      &:hover {
+        color: $light-red;
+        background: rgba($light-red, 0.1);
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .visualization-section {
+    flex: 1;
+    padding: 2rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .visualization-area {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .code-section {
+    width: 40%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    h2 {
+      color: $light-orange;
+      font-size: 1.8rem;
+      margin: 0;
+    }
+
+    .language-selector {
+      .select-dropdown {
+        width: 100%;
+        padding: 0.8rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        color: $primary-text;
+        outline: none;
+
+        &:focus {
+          border-color: $light-orange;
+        }
+      }
+    }
+
+    .code-display,
+    .step-history {
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      padding: 1.5rem;
+      overflow: hidden;
+      min-height: 100px;
+      transition: height 0.05s ease;
+
+      .code-content,
+      .history-content {
+        height: 100%;
+        overflow-y: auto;
+        padding-right: 10px;
+
+        &::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 4px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 4px;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.3);
+          }
+        }
+      }
+    }
+
+    .resize-handle {
+      height: 24px;
+      cursor: ns-resize;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+      margin: 4px 0;
+      
+      &:hover .handle-bar {
+        background: rgba($light-orange, 0.5);
+        width: 60px;
+      }
+
+      .handle-bar {
+        width: 40px;
+        height: 2px;
+        background: rgba($secondary-text, 0.3);
+        border-radius: 1px;
+        transition: all 0.2s ease;
+      }
+    }
+
+    .code-display {
+      flex: 1;
+      height: 300px;
+    }
+
+    .step-history {
+      height: 200px;
+
+      h3 {
+        color: $primary-text;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
+.visualizer-overlay.dragging {
+  cursor: ns-resize;
+  user-select: none;
+  
+  * {
+    user-select: none;
+  }
+}
+
+// Responsive styles
+@include responsive(medium) {
+  .visualizer-container {
+    flex-direction: column;
+    height: 95vh;
+
+    .visualization-section,
+    .code-section {
+      width: 100%;
+    }
+
+    .code-section {
+      height: 50%;
+    }
+  }
+} 
