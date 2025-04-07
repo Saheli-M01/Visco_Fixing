@@ -1,920 +1,203 @@
-import React, { useState, useEffect } from "react";
-import "../../../../styles/ElementStyle/TopicStyle/SortStyle/_sort.scss";
+import React, { useState } from 'react';
+import BaseVisualizer from '../../Common/Visualizer/BaseVisualizer';
+import "../../../../styles/ElementStyle/TopicStyle/SortStyle/_sortingVisualizer.scss";
+
+const sortingAlgorithms = [
+  // Comparison-Based Algorithms
+  {
+    name: "Bubble Sort",
+    timeComplexity: { worst: "O(n²)", average: "O(n²)", best: "O(n)" },
+    spaceComplexity: "O(1)",
+  },
+  {
+    name: "Selection Sort",
+    timeComplexity: { worst: "O(n²)", average: "O(n²)", best: "O(n²)" },
+    spaceComplexity: "O(1)",
+  },
+  {
+    name: "Insertion Sort",
+    timeComplexity: { worst: "O(n²)", average: "O(n²)", best: "O(n)" },
+    spaceComplexity: "O(1)",
+  },
+  {
+    name: "Merge Sort",
+    timeComplexity: {
+      worst: "O(n log n)",
+      average: "O(n log n)",
+      best: "O(n log n)",
+    },
+    spaceComplexity: "O(n)",
+  },
+  {
+    name: "Quick Sort",
+    timeComplexity: {
+      worst: "O(n²)",
+      average: "O(n log n)",
+      best: "O(n log n)",
+    },
+    spaceComplexity: "O(log n)",
+  },
+  {
+    name: "Heap Sort",
+    timeComplexity: {
+      worst: "O(n log n)",
+      average: "O(n log n)",
+      best: "O(n log n)",
+    },
+    spaceComplexity: "O(1)",
+  },
+  {
+    name: "Shell Sort",
+    timeComplexity: {
+      worst: "O(n²)",
+      average: "O(n log n)",
+      best: "O(n log n)",
+    },
+    spaceComplexity: "O(1)",
+  },
+  // Non-Comparison-Based Algorithms
+  {
+    name: "Counting Sort",
+    timeComplexity: { worst: "O(n+k)", average: "O(n+k)", best: "O(n+k)" },
+    spaceComplexity: "O(k)",
+  },
+  {
+    name: "Radix Sort",
+    timeComplexity: {
+      worst: "O(d(n+k))",
+      average: "O(d(n+k))",
+      best: "O(d(n+k))",
+    },
+    spaceComplexity: "O(n+k)",
+  },
+  {
+    name: "Bucket Sort",
+    timeComplexity: { worst: "O(n²)", average: "O(n+k)", best: "O(n+k)" },
+    spaceComplexity: "O(n+k)",
+  },
+];
 
 const SortingVisualizer = ({ algorithm, onClose }) => {
-  const [array, setArray] = useState([]);
-  const [arraySize, setArraySize] = useState(20);
-  const [sortingSpeed, setSortingSpeed] = useState(50);
-  const [isSorting, setIsSorting] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
-  const [steps, setSteps] = useState([]);
-  const [isPaused, setIsPaused] = useState(false);
+  const [inputArray, setInputArray] = useState('');
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState(algorithm);
 
-  // Generate a new random array
-  const generateNewArray = () => {
-    const newArray = [];
-    for (let i = 0; i < arraySize; i++) {
-      newArray.push(Math.floor(Math.random() * 100) + 5);
-    }
-    setArray(newArray);
-    setSteps([]);
-    setCurrentStep(0);
-    setIsSorting(false);
-    setIsPaused(false);
-  };
+  const renderControls = ({ speed, setSpeed, progress }) => (
+    <>
+      <div className="algorithm-select">
+        <label>Select Algorithm:</label>
+        <select 
+          value={selectedAlgorithm.name} 
+          className="select-dropdown"
+          onChange={(e) => {
+            const newAlgo = sortingAlgorithms.find(algo => algo.name === e.target.value);
+            setSelectedAlgorithm(newAlgo);
+          }}
+        >
+          <optgroup label="Comparison-Based Algorithms">
+            {sortingAlgorithms.slice(0, 7).map((algo) => (
+              <option key={algo.name} value={algo.name}>
+                {algo.name}
+              </option>
+            ))}
+          </optgroup>
+          <optgroup label="Non-Comparison-Based Algorithms">
+            {sortingAlgorithms.slice(7).map((algo) => (
+              <option key={algo.name} value={algo.name}>
+                {algo.name}
+              </option>
+            ))}
+          </optgroup>
+        </select>
+      </div>
 
-  // Initialize array on component mount
-  useEffect(() => {
-    generateNewArray();
-  }, [arraySize]);
+      <div className="array-input">
+        <label>Enter Array:</label>
+        <div className="input-controls">
+          <div className="input-group">
+            <input
+              type="text"
+              placeholder="Enter up to 10 numbers (e.g., 64,34,25,12,22)"
+              value={inputArray}
+              onChange={(e) => setInputArray(e.target.value)}
+            />
+            <div className="speed-control">
+              <input
+                type="range"
+                min="0.5"
+                max="2"
+                step="0.5"
+                value={speed}
+                onChange={(e) => setSpeed(parseFloat(e.target.value))}
+              />
+              <span>{speed}x</span>
+            </div>
+            <button className="play-button">
+              <i className="fa-solid fa-play"></i>
+            </button>
+          </div>
+          <div className="progress-bar">
+            <div className="progress" style={{ width: `${progress}%` }}></div>
+          </div>
+        </div>
+      </div>
 
-  // Handle array size change
-  const handleArraySizeChange = (e) => {
-    setArraySize(parseInt(e.target.value));
-  };
-
-  // Handle sorting speed change
-  const handleSpeedChange = (e) => {
-    setSortingSpeed(100 - parseInt(e.target.value));
-  };
-
-  // Generate sorting steps based on the selected algorithm
-  const generateSortingSteps = () => {
-    const newArray = [...array];
-    const newSteps = [];
-    
-    // Different sorting algorithms
-    switch (algorithm.name) {
-      case "Bubble Sort":
-        bubbleSort(newArray, newSteps);
-        break;
-      case "Selection Sort":
-        selectionSort(newArray, newSteps);
-        break;
-      case "Insertion Sort":
-        insertionSort(newArray, newSteps);
-        break;
-      case "Merge Sort":
-        mergeSort(newArray, 0, newArray.length - 1, newSteps);
-        break;
-      case "Quick Sort":
-        quickSort(newArray, 0, newArray.length - 1, newSteps);
-        break;
-      case "Heap Sort":
-        heapSort(newArray, newSteps);
-        break;
-      case "Shell Sort":
-        shellSort(newArray, newSteps);
-        break;
-      case "Counting Sort":
-        countingSort(newArray, newSteps);
-        break;
-      case "Radix Sort":
-        radixSort(newArray, newSteps);
-        break;
-      case "Bucket Sort":
-        bucketSort(newArray, newSteps);
-        break;
-      default:
-        // Default to bubble sort if algorithm not found
-        bubbleSort(newArray, newSteps);
-    }
-    
-    setSteps(newSteps);
-    setIsSorting(true);
-    setCurrentStep(0);
-  };
-
-  // Bubble Sort implementation
-  const bubbleSort = (arr, steps) => {
-    const n = arr.length;
-    for (let i = 0; i < n - 1; i++) {
-      for (let j = 0; j < n - i - 1; j++) {
-        // Add step with comparison
-        steps.push({
-          array: [...arr],
-          comparing: [j, j + 1],
-          sorted: [],
-          swapped: false
-        });
-        
-        if (arr[j] > arr[j + 1]) {
-          // Swap elements
-          const temp = arr[j];
-          arr[j] = arr[j + 1];
-          arr[j + 1] = temp;
-          
-          // Add step with swap
-          steps.push({
-            array: [...arr],
-            comparing: [j, j + 1],
-            sorted: [],
-            swapped: true
-          });
-        }
-      }
-      
-      // Mark the last element as sorted
-      steps.push({
-        array: [...arr],
-        comparing: [],
-        sorted: [n - i - 1],
-        swapped: false
-      });
-    }
-    
-    // Mark all elements as sorted
-    steps.push({
-      array: [...arr],
-      comparing: [],
-      sorted: Array.from({ length: n }, (_, i) => i),
-      swapped: false
-    });
-  };
-
-  // Selection Sort implementation
-  const selectionSort = (arr, steps) => {
-    const n = arr.length;
-    for (let i = 0; i < n - 1; i++) {
-      let minIdx = i;
-      
-      for (let j = i + 1; j < n; j++) {
-        // Add step with comparison
-        steps.push({
-          array: [...arr],
-          comparing: [minIdx, j],
-          sorted: Array.from({ length: i }, (_, idx) => idx),
-          swapped: false
-        });
-        
-        if (arr[j] < arr[minIdx]) {
-          minIdx = j;
-        }
-      }
-      
-      if (minIdx !== i) {
-        // Swap elements
-        const temp = arr[i];
-        arr[i] = arr[minIdx];
-        arr[minIdx] = temp;
-        
-        // Add step with swap
-        steps.push({
-          array: [...arr],
-          comparing: [i, minIdx],
-          sorted: Array.from({ length: i }, (_, idx) => idx),
-          swapped: true
-        });
-      }
-      
-      // Mark the current element as sorted
-      steps.push({
-        array: [...arr],
-        comparing: [],
-        sorted: Array.from({ length: i + 1 }, (_, idx) => idx),
-        swapped: false
-      });
-    }
-    
-    // Mark all elements as sorted
-    steps.push({
-      array: [...arr],
-      comparing: [],
-      sorted: Array.from({ length: n }, (_, i) => i),
-      swapped: false
-    });
-  };
-
-  // Insertion Sort implementation
-  const insertionSort = (arr, steps) => {
-    const n = arr.length;
-    for (let i = 1; i < n; i++) {
-      const key = arr[i];
-      let j = i - 1;
-      
-      // Add step with comparison
-      steps.push({
-        array: [...arr],
-        comparing: [i],
-        sorted: Array.from({ length: i }, (_, idx) => idx),
-        swapped: false
-      });
-      
-      while (j >= 0 && arr[j] > key) {
-        // Add step with comparison
-        steps.push({
-          array: [...arr],
-          comparing: [j, j + 1],
-          sorted: Array.from({ length: i }, (_, idx) => idx),
-          swapped: false
-        });
-        
-        arr[j + 1] = arr[j];
-        j--;
-      }
-      
-      arr[j + 1] = key;
-      
-      // Add step with insertion
-      steps.push({
-        array: [...arr],
-        comparing: [],
-        sorted: Array.from({ length: i + 1 }, (_, idx) => idx),
-        swapped: true
-      });
-    }
-    
-    // Mark all elements as sorted
-    steps.push({
-      array: [...arr],
-      comparing: [],
-      sorted: Array.from({ length: n }, (_, i) => i),
-      swapped: false
-    });
-  };
-
-  // Merge Sort implementation
-  const mergeSort = (arr, left, right, steps) => {
-    if (left < right) {
-      const mid = Math.floor((left + right) / 2);
-      
-      // Add step with division
-      steps.push({
-        array: [...arr],
-        comparing: [left, mid, right],
-        sorted: [],
-        swapped: false
-      });
-      
-      mergeSort(arr, left, mid, steps);
-      mergeSort(arr, mid + 1, right, steps);
-      
-      merge(arr, left, mid, right, steps);
-    }
-  };
-
-  // Merge function for Merge Sort
-  const merge = (arr, left, mid, right, steps) => {
-    const n1 = mid - left + 1;
-    const n2 = right - mid;
-    
-    // Create temporary arrays
-    const L = new Array(n1);
-    const R = new Array(n2);
-    
-    // Copy data to temporary arrays
-    for (let i = 0; i < n1; i++) {
-      L[i] = arr[left + i];
-    }
-    for (let j = 0; j < n2; j++) {
-      R[j] = arr[mid + 1 + j];
-    }
-    
-    // Merge the temporary arrays back into arr
-    let i = 0;
-    let j = 0;
-    let k = left;
-    
-    while (i < n1 && j < n2) {
-      // Add step with comparison
-      steps.push({
-        array: [...arr],
-        comparing: [left + i, mid + 1 + j],
-        sorted: Array.from({ length: left }, (_, idx) => idx),
-        swapped: false
-      });
-      
-      if (L[i] <= R[j]) {
-        arr[k] = L[i];
-        i++;
-      } else {
-        arr[k] = R[j];
-        j++;
-      }
-      
-      // Add step with insertion
-      steps.push({
-        array: [...arr],
-        comparing: [],
-        sorted: Array.from({ length: k + 1 }, (_, idx) => idx),
-        swapped: true
-      });
-      
-      k++;
-    }
-    
-    // Copy the remaining elements of L, if any
-    while (i < n1) {
-      arr[k] = L[i];
-      i++;
-      k++;
-      
-      // Add step with insertion
-      steps.push({
-        array: [...arr],
-        comparing: [],
-        sorted: Array.from({ length: k }, (_, idx) => idx),
-        swapped: true
-      });
-    }
-    
-    // Copy the remaining elements of R, if any
-    while (j < n2) {
-      arr[k] = R[j];
-      j++;
-      k++;
-      
-      // Add step with insertion
-      steps.push({
-        array: [...arr],
-        comparing: [],
-        sorted: Array.from({ length: k }, (_, idx) => idx),
-        swapped: true
-      });
-    }
-    
-    // Mark the merged section as sorted
-    steps.push({
-      array: [...arr],
-      comparing: [],
-      sorted: Array.from({ length: right + 1 }, (_, idx) => idx),
-      swapped: false
-    });
-  };
-
-  // Quick Sort implementation
-  const quickSort = (arr, low, high, steps) => {
-    if (low < high) {
-      // Add step with division
-      steps.push({
-        array: [...arr],
-        comparing: [low, high],
-        sorted: [],
-        swapped: false
-      });
-      
-      const pi = partition(arr, low, high, steps);
-      
-      quickSort(arr, low, pi - 1, steps);
-      quickSort(arr, pi + 1, high, steps);
-    }
-  };
-
-  // Partition function for Quick Sort
-  const partition = (arr, low, high, steps) => {
-    const pivot = arr[high];
-    let i = low - 1;
-    
-    for (let j = low; j < high; j++) {
-      // Add step with comparison
-      steps.push({
-        array: [...arr],
-        comparing: [j, high],
-        sorted: [],
-        swapped: false
-      });
-      
-      if (arr[j] < pivot) {
-        i++;
-        
-        // Swap elements
-        const temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-        
-        // Add step with swap
-        steps.push({
-          array: [...arr],
-          comparing: [i, j],
-          sorted: [],
-          swapped: true
-        });
-      }
-    }
-    
-    // Swap elements
-    const temp = arr[i + 1];
-    arr[i + 1] = arr[high];
-    arr[high] = temp;
-    
-    // Add step with swap
-    steps.push({
-      array: [...arr],
-      comparing: [i + 1, high],
-      sorted: [i + 1],
-      swapped: true
-    });
-    
-    return i + 1;
-  };
-
-  // Heap Sort implementation
-  const heapSort = (arr, steps) => {
-    const n = arr.length;
-    
-    // Build heap (rearrange array)
-    for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
-      heapify(arr, n, i, steps);
-    }
-    
-    // One by one extract an element from heap
-    for (let i = n - 1; i > 0; i--) {
-      // Add step with comparison
-      steps.push({
-        array: [...arr],
-        comparing: [0, i],
-        sorted: Array.from({ length: n - i - 1 }, (_, idx) => n - 1 - idx),
-        swapped: false
-      });
-      
-      // Move current root to end
-      const temp = arr[0];
-      arr[0] = arr[i];
-      arr[i] = temp;
-      
-      // Add step with swap
-      steps.push({
-        array: [...arr],
-        comparing: [0, i],
-        sorted: Array.from({ length: n - i }, (_, idx) => n - 1 - idx),
-        swapped: true
-      });
-      
-      // Call max heapify on the reduced heap
-      heapify(arr, i, 0, steps);
-    }
-    
-    // Mark all elements as sorted
-    steps.push({
-      array: [...arr],
-      comparing: [],
-      sorted: Array.from({ length: n }, (_, i) => i),
-      swapped: false
-    });
-  };
-
-  // Heapify function for Heap Sort
-  const heapify = (arr, n, i, steps) => {
-    let largest = i;
-    const left = 2 * i + 1;
-    const right = 2 * i + 2;
-    
-    // Add step with comparison
-    steps.push({
-      array: [...arr],
-      comparing: [i, left, right],
-      sorted: [],
-      swapped: false
-    });
-    
-    // If left child is larger than root
-    if (left < n && arr[left] > arr[largest]) {
-      largest = left;
-    }
-    
-    // If right child is larger than largest so far
-    if (right < n && arr[right] > arr[largest]) {
-      largest = right;
-    }
-    
-    // If largest is not root
-    if (largest !== i) {
-      // Swap elements
-      const temp = arr[i];
-      arr[i] = arr[largest];
-      arr[largest] = temp;
-      
-      // Add step with swap
-      steps.push({
-        array: [...arr],
-        comparing: [i, largest],
-        sorted: [],
-        swapped: true
-      });
-      
-      // Recursively heapify the affected sub-tree
-      heapify(arr, n, largest, steps);
-    }
-  };
-
-  // Shell Sort implementation
-  const shellSort = (arr, steps) => {
-    const n = arr.length;
-    
-    // Start with a big gap, then reduce the gap
-    for (let gap = Math.floor(n / 2); gap > 0; gap = Math.floor(gap / 2)) {
-      // Do a gapped insertion sort for this gap size
-      for (let i = gap; i < n; i++) {
-        // Add step with comparison
-        steps.push({
-          array: [...arr],
-          comparing: [i, i - gap],
-          sorted: [],
-          swapped: false
-        });
-        
-        // Save arr[i] in temp and make a hole at position i
-        const temp = arr[i];
-        
-        // Shift earlier gap-sorted elements up until the correct location for arr[i] is found
-        let j;
-        for (j = i; j >= gap && arr[j - gap] > temp; j -= gap) {
-          // Add step with comparison
-          steps.push({
-            array: [...arr],
-            comparing: [j, j - gap],
-            sorted: [],
-            swapped: false
-          });
-          
-          arr[j] = arr[j - gap];
-          
-          // Add step with shift
-          steps.push({
-            array: [...arr],
-            comparing: [],
-            sorted: [],
-            swapped: true
-          });
-        }
-        
-        // Put temp (original arr[i]) in its correct location
-        arr[j] = temp;
-        
-        // Add step with insertion
-        steps.push({
-          array: [...arr],
-          comparing: [],
-          sorted: [j],
-          swapped: true
-        });
-      }
-    }
-    
-    // Mark all elements as sorted
-    steps.push({
-      array: [...arr],
-      comparing: [],
-      sorted: Array.from({ length: n }, (_, i) => i),
-      swapped: false
-    });
-  };
-
-  // Counting Sort implementation
-  const countingSort = (arr, steps) => {
-    const n = arr.length;
-    const max = Math.max(...arr);
-    const min = Math.min(...arr);
-    const range = max - min + 1;
-    
-    // Create a count array to store count of each element
-    const count = new Array(range).fill(0);
-    
-    // Store count of each element
-    for (let i = 0; i < n; i++) {
-      count[arr[i] - min]++;
-      
-      // Add step with counting
-      steps.push({
-        array: [...arr],
-        comparing: [i],
-        sorted: [],
-        swapped: false
-      });
-    }
-    
-    // Modify count[i] so that count[i] contains actual position of this element in output array
-    for (let i = 1; i < count.length; i++) {
-      count[i] += count[i - 1];
-    }
-    
-    // Create the output array
-    const output = new Array(n);
-    
-    // Build the output array
-    for (let i = n - 1; i >= 0; i--) {
-      // Add step with placement
-      steps.push({
-        array: [...arr],
-        comparing: [i],
-        sorted: Array.from({ length: n - i - 1 }, (_, idx) => n - 1 - idx),
-        swapped: false
-      });
-      
-      output[count[arr[i] - min] - 1] = arr[i];
-      count[arr[i] - min]--;
-      
-      // Add step with placement
-      steps.push({
-        array: [...output],
-        comparing: [],
-        sorted: Array.from({ length: n - i }, (_, idx) => n - 1 - idx),
-        swapped: true
-      });
-    }
-    
-    // Copy the output array to arr, so that arr now contains sorted elements
-    for (let i = 0; i < n; i++) {
-      arr[i] = output[i];
-      
-      // Add step with copy
-      steps.push({
-        array: [...arr],
-        comparing: [],
-        sorted: Array.from({ length: i + 1 }, (_, idx) => idx),
-        swapped: true
-      });
-    }
-    
-    // Mark all elements as sorted
-    steps.push({
-      array: [...arr],
-      comparing: [],
-      sorted: Array.from({ length: n }, (_, i) => i),
-      swapped: false
-    });
-  };
-
-  // Radix Sort implementation
-  const radixSort = (arr, steps) => {
-    const n = arr.length;
-    const max = Math.max(...arr);
-    
-    // Do counting sort for every digit
-    for (let exp = 1; Math.floor(max / exp) > 0; exp *= 10) {
-      // Add step with digit selection
-      steps.push({
-        array: [...arr],
-        comparing: [],
-        sorted: [],
-        swapped: false
-      });
-      
-      countingSortForRadix(arr, n, exp, steps);
-    }
-  };
-
-  // Counting Sort for Radix Sort
-  const countingSortForRadix = (arr, n, exp, steps) => {
-    const output = new Array(n).fill(0);
-    const count = new Array(10).fill(0);
-    
-    // Store count of occurrences in count[]
-    for (let i = 0; i < n; i++) {
-      count[Math.floor(arr[i] / exp) % 10]++;
-      
-      // Add step with counting
-      steps.push({
-        array: [...arr],
-        comparing: [i],
-        sorted: [],
-        swapped: false
-      });
-    }
-    
-    // Change count[i] so that count[i] contains actual position of this digit in output[]
-    for (let i = 1; i < 10; i++) {
-      count[i] += count[i - 1];
-    }
-    
-    // Build the output array
-    for (let i = n - 1; i >= 0; i--) {
-      // Add step with placement
-      steps.push({
-        array: [...arr],
-        comparing: [i],
-        sorted: Array.from({ length: n - i - 1 }, (_, idx) => n - 1 - idx),
-        swapped: false
-      });
-      
-      output[count[Math.floor(arr[i] / exp) % 10] - 1] = arr[i];
-      count[Math.floor(arr[i] / exp) % 10]--;
-      
-      // Add step with placement
-      steps.push({
-        array: [...output],
-        comparing: [],
-        sorted: Array.from({ length: n - i }, (_, idx) => n - 1 - idx),
-        swapped: true
-      });
-    }
-    
-    // Copy the output array to arr, so that arr now contains sorted elements
-    for (let i = 0; i < n; i++) {
-      arr[i] = output[i];
-      
-      // Add step with copy
-      steps.push({
-        array: [...arr],
-        comparing: [],
-        sorted: Array.from({ length: i + 1 }, (_, idx) => idx),
-        swapped: true
-      });
-    }
-  };
-
-  // Bucket Sort implementation
-  const bucketSort = (arr, steps) => {
-    const n = arr.length;
-    
-    // Create n empty buckets
-    const buckets = Array.from({ length: n }, () => []);
-    
-    // Add step with bucket creation
-    steps.push({
-      array: [...arr],
-      comparing: [],
-      sorted: [],
-      swapped: false
-    });
-    
-    // Put array elements in different buckets
-    for (let i = 0; i < n; i++) {
-      const bucketIndex = Math.floor(arr[i] / 10) * 10;
-      buckets[bucketIndex].push(arr[i]);
-      
-      // Add step with bucket placement
-      steps.push({
-        array: [...arr],
-        comparing: [i],
-        sorted: [],
-        swapped: false
-      });
-    }
-    
-    // Sort individual buckets
-    for (let i = 0; i < n; i++) {
-      buckets[i].sort((a, b) => a - b);
-      
-      // Add step with bucket sorting
-      steps.push({
-        array: [...arr],
-        comparing: [],
-        sorted: [],
-        swapped: false
-      });
-    }
-    
-    // Concatenate all buckets into arr
-    let index = 0;
-    for (let i = 0; i < n; i++) {
-      for (let j = 0; j < buckets[i].length; j++) {
-        arr[index++] = buckets[i][j];
-        
-        // Add step with concatenation
-        steps.push({
-          array: [...arr],
-          comparing: [],
-          sorted: Array.from({ length: index }, (_, idx) => idx),
-          swapped: true
-        });
-      }
-    }
-    
-    // Mark all elements as sorted
-    steps.push({
-      array: [...arr],
-      comparing: [],
-      sorted: Array.from({ length: n }, (_, i) => i),
-      swapped: false
-    });
-  };
-
-  // Visualize the sorting steps
-  useEffect(() => {
-    let timeout;
-    
-    if (isSorting && currentStep < steps.length) {
-      timeout = setTimeout(() => {
-        if (!isPaused) {
-          setArray(steps[currentStep].array);
-          setCurrentStep(currentStep + 1);
-        }
-      }, sortingSpeed);
-    } else if (currentStep >= steps.length) {
-      setIsSorting(false);
-    }
-    
-    return () => clearTimeout(timeout);
-  }, [isSorting, currentStep, steps, sortingSpeed, isPaused]);
-
-  // Handle play/pause
-  const togglePlayPause = () => {
-    if (isSorting) {
-      setIsPaused(!isPaused);
-    } else {
-      generateSortingSteps();
-    }
-  };
-
-  // Handle reset
-  const resetVisualization = () => {
-    generateNewArray();
-  };
-
-  return (
-    <div className="sorting-visualizer">
-      <div className="visualizer-header">
-        <h2>{algorithm.name} Visualization</h2>
-        <button className="close-btn" onClick={onClose}>
-          <i className="fas fa-times"></i>
+      <div className="navigation-buttons">
+        <button className="nav-button">
+          <i className="fa-solid fa-backward-step"></i> First
+        </button>
+        <button className="nav-button">
+          <i className="fa-solid fa-chevron-left"></i> Prev
+        </button>
+        <button className="nav-button start-button">Start</button>
+        <button className="nav-button">
+          Next <i className="fa-solid fa-chevron-right"></i>
+        </button>
+        <button className="nav-button">
+          Last <i className="fa-solid fa-forward-step"></i>
         </button>
       </div>
-      
-      <div className="visualizer-controls">
-        <div className="control-group">
-          <label htmlFor="array-size">Array Size: {arraySize}</label>
-          <input
-            type="range"
-            id="array-size"
-            min="5"
-            max="50"
-            value={arraySize}
-            onChange={handleArraySizeChange}
-            disabled={isSorting}
-          />
-        </div>
-        
-        <div className="control-group">
-          <label htmlFor="sorting-speed">Speed: {sortingSpeed}ms</label>
-          <input
-            type="range"
-            id="sorting-speed"
-            min="1"
-            max="100"
-            value={100 - sortingSpeed}
-            onChange={handleSpeedChange}
-            disabled={isSorting}
-          />
-        </div>
-        
-        <div className="control-buttons">
-          <button 
-            className="control-btn" 
-            onClick={resetVisualization}
-            disabled={isSorting && !isPaused}
-          >
-            <i className="fas fa-redo"></i> Reset
-          </button>
-          
-          <button 
-            className="control-btn" 
-            onClick={togglePlayPause}
-          >
-            {isSorting ? (
-              isPaused ? (
-                <><i className="fas fa-play"></i> Resume</>
-              ) : (
-                <><i className="fas fa-pause"></i> Pause</>
-              )
-            ) : (
-              <><i className="fas fa-play"></i> Start</>
-            )}
-          </button>
-        </div>
+    </>
+  );
+
+  const renderVisualization = () => (
+    <>
+      <h3>Array Elements</h3>
+      <div className="array-bars">
+        {/* Array bars will be rendered here */}
       </div>
-      
-      <div className="visualizer-container">
-        <div className="array-container">
-          {array.map((value, idx) => {
-            const isComparing = steps[currentStep - 1]?.comparing.includes(idx);
-            const isSorted = steps[currentStep - 1]?.sorted.includes(idx);
-            const isSwapped = steps[currentStep - 1]?.swapped && isComparing;
-            
-            return (
-              <div
-                key={idx}
-                className={`array-bar ${isComparing ? 'comparing' : ''} ${isSorted ? 'sorted' : ''} ${isSwapped ? 'swapped' : ''}`}
-                style={{
-                  height: `${value * 3}px`,
-                  width: `${100 / arraySize}%`,
-                  margin: `0 ${100 / arraySize / 2}%`
-                }}
-              >
-                <span className="bar-value">{value}</span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      
-      <div className="algorithm-info">
-        <h3>Algorithm Information</h3>
-        <div className="info-grid">
-          <div className="info-item">
-            <h4>Time Complexity</h4>
-            <p>Worst: {algorithm.timeComplexity.worst}</p>
-            <p>Average: {algorithm.timeComplexity.average}</p>
-            <p>Best: {algorithm.timeComplexity.best}</p>
-          </div>
-          <div className="info-item">
-            <h4>Space Complexity</h4>
-            <p>{algorithm.spaceComplexity}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
+  );
+
+  const renderCode = (selectedLanguage) => (
+    <pre>
+      <code className={`language-${selectedLanguage.toLowerCase()}`}>
+        {`def ${selectedAlgorithm.name.toLowerCase().replace(/\s+/g, '_')}(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr`}
+      </code>
+    </pre>
+  );
+
+  const renderStepHistory = () => (
+    // Step history content will be added here
+    null
+  );
+
+  return (
+    <BaseVisualizer
+      title="Sorting Visualization"
+      onClose={onClose}
+      renderControls={renderControls}
+      renderVisualization={renderVisualization}
+      renderCode={renderCode}
+      renderStepHistory={renderStepHistory}
+    />
   );
 };
 
 export default SortingVisualizer;
+
