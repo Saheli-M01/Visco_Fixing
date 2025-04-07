@@ -5,160 +5,166 @@
 @use "sass:color";
 
 #home {
-    min-height: 100vh;
-    @include flex-center;
+  min-height: 100vh;
+  @include flex-center;
+  padding-top: 80px;
+  margin-bottom: 1rem;
+  .container {
+    @extend %glass-background;
+
+    .row {
+      // Left side content
+      .left {
+        h1 {
+          @extend %h1-style;
+          color: $light-yellow;
+
+          span {
+            @extend %h1-span-style;
+            color: $primary-text;
+          }
+        }
+
+        h4 {
+          @extend %h4-style;
+          color: $secondary-text;
+
+          span {
+            color: $dark-yellow;
+            @extend %h4-span-style;
+          }
+        }
+
+        button {
+          @extend %button;
+          @include slide-up(
+            $slide-up-duration,
+            $slide-up-timing,
+            $slide-up-button-delay
+          );
+        }
+      }
+
+      // Right side code animation
+      .right {
+        position: relative;
+
+        #toggleAnimation,
+        #skip {
+          @extend %control-button;
+        }
+
+        #toggleAnimation {
+          right: 4rem;
+        }
+
+        #skip {
+          right: 1rem;
+        }
+
+        .code-container {
+          background: rgba(13, 17, 23, 0.95);
+          white-space: pre-wrap;
+          word-wrap: break-word;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+          padding: 0 30px;
+          border-radius: 12px;
+          color: $primary-text;
+          font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+          font-weight: 500;
+          font-size: $font-code;
+          width: 100%;
+          margin-top: 1rem;
+          overflow: hidden;
+          height: 60vh;
+          max-height: 60vh;
+          position: relative;
+          @include slide-up(
+            $slide-up-duration,
+            $slide-up-timing,
+            $slide-up-delay
+          );
+          transition: all 0.3s ease;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+
+          &::before {
+            content: "• • •";
+            position: sticky;
+            top: 0;
+            left: -30px;
+            width: calc(100% + 60px);
+            height: 35px;
+            background: rgba(30, 34, 40, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 2px;
+            border-radius: 12px 12px 0 0;
+            z-index: 10;
+            margin: 0 -30px;
+          }
+        }
+      }
+    }
+  }
+
+  // Responsive styles
+  @include responsive(large) {
+    .right {
+      .code-container {
+        height: 40vh !important;
+        max-height: 40vh !important;
+        font-size: get-font-size("large", "code") !important;
+      }
+    }
+  }
+  @include responsive(medium) {
     padding-top: 80px;
-    margin-bottom: 1rem;
+
+    .left {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .right {
+      .code-container {
+        height: 40vh !important;
+        max-height: 40vh !important;
+        font-size: get-font-size("medium", "code");
+      }
+    }
+  }
+
+  @include responsive(tablet) {
+    padding-top: 80px;
+
+    .left {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .right {
+      .code-container {
+        height: 40vh !important;
+        max-height: 40vh !important;
+        font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+      }
+    }
+  }
+
+  @include responsive(mobile) {
     .container {
-        @extend %glass-background;
-
-        .row {
-
-            // Left side content
-            .left {
-                h1 {
-                    @extend %h1-style;
-                    color: $light-yellow;
-
-                    span {
-                        @extend %h1-span-style;
-                        color: $primary-text;
-                    }
-                }
-
-                h4 {
-                    @extend %h4-style;
-                    color: $secondary-text;
-
-                    span {
-                        color: $dark-yellow;
-                        @extend %h4-span-style;
-                    }
-                }
-
-                button {
-                    @extend %button;
-                    @include slide-up($slide-up-duration, $slide-up-timing, $slide-up-button-delay);
-                }
-            }
-
-
-            // Right side code animation
-            .right {
-                position: relative;
-
-                #toggleAnimation,
-                #skip {
-                    @extend %control-button;
-                }
-
-                #toggleAnimation {
-                    right: 4rem;
-                }
-
-                #skip {
-                    right: 1rem;
-                }
-
-                .code-container {
-                    background: rgba(13, 17, 23, 0.95);
-                    white-space: pre-wrap;
-                    word-wrap: break-word;
-                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-                    padding: 0 30px;
-                    border-radius: 12px;
-                    color: $primary-text;
-                    font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
-                    font-weight: 500;
-                    font-size: $font-code;
-                    width: 100%;
-                    margin-top: 1rem;
-                    overflow: hidden;
-                    height: 60vh;
-                    max-height: 60vh;
-                    position: relative;
-                    @include slide-up($slide-up-duration, $slide-up-timing, $slide-up-delay);
-                    transition: all 0.3s ease;
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-
-                    &::before {
-                        content: "• • •";
-                        position: sticky;
-                        top: 0;
-                        left: -30px;
-                        width: calc(100% + 60px);
-                        height: 35px;
-                        background: rgba(30, 34, 40, 0.95);
-                        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                        display: flex;
-                        align-items: center;
-                        padding: 0 15px;
-                        font-size: 20px;
-                        color: rgba(255, 255, 255, 0.5);
-                        letter-spacing: 2px;
-                        border-radius: 12px 12px 0 0;
-                        z-index: 10;
-                        margin: 0 -30px;
-                    }
-                }
-            }
-        }
+      width: 90%;
     }
-
-    // Responsive styles
-    @include responsive(large) {
-        .right {
-            .code-container {
-                height: 40vh !important;
-                max-height: 40vh !important;
-                font-size: get-font-size('large', 'code') !important;
-            }
-        }
+    .right {
+      .code-container {
+        height: 30vh !important;
+        max-height: 30vh !important;
+        font-size: get-font-size("mobile", "code");
+      }
     }
-    @include responsive(medium) {
-        padding-top: 80px;
-
-        .left {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .right {
-            .code-container {
-                height: 40vh !important;
-                max-height: 40vh !important;
-                font-size: get-font-size('medium', 'code');
-            }
-        }
-    }
-
-    @include responsive(tablet) {
-        padding-top: 80px;
-
-        .left {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .right {
-            .code-container {
-                height: 40vh !important;
-                max-height: 40vh !important;
-                font-size: clamp(0.8rem, 1.5vw, 0.9rem);
-            }
-        }
-    }
-
-    @include responsive(mobile) {
-       .container{
-        width:90%;
-       }
-        .right {
-            .code-container {
-                height: 30vh !important;
-                max-height: 30vh !important;
-                font-size: get-font-size('mobile', 'code');
-            }
-        }
-    }
+  }
 }

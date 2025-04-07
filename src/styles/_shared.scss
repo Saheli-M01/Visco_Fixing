@@ -21,7 +21,7 @@
 %button-base {
   font-family: $secondary-font;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: get-font-size("large", "p");
   padding: 1rem 1.2rem;
   background: transparent;
   border: 2px solid;
@@ -42,6 +42,13 @@
   &:hover {
     background: $dark-yellow;
     color: $primary-background;
+  }
+  //Responsiveness
+  @include responsive(medium) {
+    font-size: get-font-size("medium", "p");
+  }
+  @include responsive(mobile) {
+    font-size: get-font-size("mobile", "p");
   }
 }
 
@@ -86,27 +93,41 @@
   font-family: $primary-font;
   font-size: $font-h1;
   font-weight: 700;
-  
+
   @include responsive(medium) {
-    font-size: get-font-size('medium', 'h1') !important;
+    font-size: get-font-size("medium", "h1") !important;
   }
-  
+
   @include responsive(mobile) {
-    font-size: get-font-size('mobile', 'h1') !important;
+    font-size: get-font-size("mobile", "h1") !important;
   }
 }
 
 %h1-span-style {
   font-family: $primary-font;
   font-size: $font-span-h1;
-  @include responsive(medium) {
-    font-size: get-font-size('medium', 'h1-span') !important;
-  }
   
+  @include responsive(medium) {
+    font-size: get-font-size("medium", "h1-span") !important;
+  }
+
   @include responsive(mobile) {
-    font-size: get-font-size('mobile', 'h1-span') !important;
+    font-size: get-font-size("mobile", "h1-span") !important;
   }
 }
+
+%h2-style {
+  font-family: $primary-font;
+  font-size: $font-h2;
+  @include responsive(medium) {
+    font-size: get-font-size("medium", "h2") !important;
+  } 
+
+  @include responsive(mobile) {
+    font-size: get-font-size("mobile", "h2") !important;
+  }
+}
+
 %h4-style {
   font-family: $primary-font;
   font-size: $font-h4;
@@ -114,7 +135,7 @@
   color: $secondary-text;
 
   @include responsive(medium) {
-    font-size: get-font-size('medium', 'h4') !important;
+    font-size: get-font-size("medium", "h4") !important;
   }
 }
 
@@ -122,7 +143,7 @@
   font-family: $primary-font;
   font-size: $font-span-h4;
   @include responsive(medium) {
-    font-size: get-font-size('medium', 'h4-span') !important;
+    font-size: get-font-size("medium", "h4-span") !important;
   }
 }
 
@@ -133,11 +154,10 @@
   color: $secondary-text;
 
   @include responsive(medium) {
-    font-size: get-font-size('medium', 'h5') !important;
+    font-size: get-font-size("medium", "h5") !important;
   }
-  
+
   @include responsive(mobile) {
-    font-size: get-font-size('mobile', 'h5') !important;
+    font-size: get-font-size("mobile", "h5") !important;
   }
 }
-

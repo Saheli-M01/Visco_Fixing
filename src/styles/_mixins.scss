@@ -1,4 +1,4 @@
-@use './variables' as *;
+@use "./variables" as *;
 
 // Glow effect mixin
 @mixin glow-effect($color) {
@@ -66,33 +66,27 @@
     @media (max-width: 1280px) {
       @content;
     }
-  }
-  @else if $breakpoint ==medium {
+  } @else if $breakpoint ==medium {
     @media (max-width: 992px) {
       @content;
     }
-  }
-
-  @else if $breakpoint ==tablet {
+  } @else if $breakpoint ==tablet {
     @media (max-width: 768px) {
       @content;
     }
-  }
-
-  @else if $breakpoint ==mobile {
+  } @else if $breakpoint ==mobile {
     @media (max-width: 576px) {
       @content;
     }
   }
 }
 
-
 // Topic button mixin with customizable color
 @mixin topic-button($color) {
   margin-top: auto;
   width: auto;
-  font-size: 0.9rem;
-  padding: 0.8rem 2rem;
+  font-size: get-font-size("medium", "p");
+  padding: 0.8rem;
   background: transparent;
   border: 1px solid $color;
   color: $color;
@@ -123,8 +117,6 @@
   }
 }
 
-
-
 @mixin topic-element-section($light-theme-color, $medium-theme-color) {
   .container {
     @extend %glass-background;
@@ -134,13 +126,20 @@
       @extend %h1-style;
       color: $primary-text;
     }
+    h2 {
+      @extend %h2-style;
+      color: $primary-text;
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba($secondary-text, 0.2);
+    }
     //card style
     .topic-card {
       width: 100%;
-
       position: relative;
       margin: 0 auto 1.5rem;
-    
+
       .card-content {
         background: linear-gradient(#111010, #212121);
         border: 1px solid rgba(255, 255, 255, 0.03);
@@ -155,27 +154,29 @@
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         height: 100%;
-    
+
         &:hover {
           transform: translateY(-5px);
           border-color: rgba(224, 224, 224, 0.793);
           box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
         }
-    
+
         .card-name {
-          font-size: 1.1rem;
+          font-size: get-font-size("medium", "h5") !important;
           font-weight: 600;
           color: $light-theme-color;
           margin: 0;
         }
-        
+
         p {
           strong {
             color: $primary-text;
           }
+          margin: 0.5rem;
           color: $secondary-text;
+          font-size: get-font-size("medium", "p") !important;
         }
-        
+
         button {
           @include topic-button($light-theme-color);
         }
@@ -186,27 +187,15 @@
   // Responsive styles
   @include responsive(medium) {
     .container {
-      h1 {
-        font-size: get-font-size('medium', 'h1') !important;
-      }
-      
       .topic-card {
         max-width: 240px;
-       
+
         .card-content {
           padding: 1rem;
           min-height: 340px;
-          .card-name {
-            font-size: 1rem;
-          }
-          
-          p {
-            font-size: 0.9rem;
-          }
-          
+
           button {
-            padding: 0.6rem 1.5rem;
-            font-size: 0.8rem;
+            padding: 0.6rem;
           }
         }
       }
@@ -215,29 +204,18 @@
 
   @include responsive(mobile) {
     .container {
-      h1 {
-        font-size: get-font-size('mobile', 'h1') !important;
-      }
-      
+      width: 90%;
+
       .topic-card {
-        max-width: 220px;
-        
+        max-width: 100%;
+
         .card-content {
           padding: 0.8rem;
-          
-          .card-name {
-            font-size: 0.9rem;
-            height: 100%;
-          }
-          
-          p {
-            font-size: 0.8rem;
-          }
-          
+
           button {
-            padding: 0.5rem 1.2rem;
-            font-size: 0.75rem;
-            margin-top: 1rem;
+            width: 70%;
+
+            margin: 1.5rem auto 0;
           }
         }
       }

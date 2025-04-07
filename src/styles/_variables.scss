@@ -40,6 +40,7 @@ $secondary-font: "Montserrat Alternates", serif;
 // Font Sizes
 $font-h1: 2.8vw;
 $font-span-h1: 3.2vw;
+$font-h2: 2rem;
 $font-h4: 1.5vw;
 $font-span-h4: 2.5vw;
 $font-h5: 1.2vw;
@@ -51,26 +52,32 @@ $font-sizes: (
   'large': (
     'h1': 2.5rem,
     'h1-span': 2.7rem,
+    'h2': 2rem,
     'h4': 1.5rem,
     'h4-span': 1.7rem,
     'h5': 1.2rem,
     'code': 0.8rem,
+    'p': 1rem
   ),
   'medium': (
     'h1': 2.2rem,
     'h1-span': 2.4rem,
+    'h2': 1.8rem,
     'h4': 1.3rem,
     'h4-span': 1.5rem,
     'h5': 1.1rem,
-    'code': clamp(0.8rem, 1.5vw, 0.9rem)
+    'code': clamp(0.8rem, 1.5vw, 0.9rem),
+    'p': 1rem
   ),
   'mobile': (
     'h1': 2rem,
     'h1-span': 2.2rem,
+    'h2': 1.6rem,
     'h4': 1.1rem,
     'h4-span': 1.3rem,
     'h5': 1rem,
-    'code': clamp(0.7rem, 1.4vw, 0.8rem)
+    'code': clamp(0.7rem, 1.4vw, 0.8rem),
+    'p': 1rem
   )
 );
 
