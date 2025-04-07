@@ -86,7 +86,7 @@
   margin-top: auto;
   width: auto;
   font-size: get-font-size("medium", "p");
-  padding: 0.8rem 2rem;
+  padding: 0.8rem;
   background: transparent;
   border: 1px solid $color;
   color: $color;
@@ -126,10 +126,17 @@
       @extend %h1-style;
       color: $primary-text;
     }
+    h2 {
+      @extend %h2-style;
+      color: $primary-text;
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba($secondary-text, 0.2);
+    }
     //card style
     .topic-card {
       width: 100%;
-
       position: relative;
       margin: 0 auto 1.5rem;
 
@@ -188,7 +195,7 @@
           min-height: 340px;
 
           button {
-            padding: 0.6rem 1.5rem;
+            padding: 0.6rem;
           }
         }
       }
@@ -209,7 +216,6 @@
             width: 70%;
 
             margin: 1.5rem auto 0;
-            padding: 0.8rem;
           }
         }
       }
