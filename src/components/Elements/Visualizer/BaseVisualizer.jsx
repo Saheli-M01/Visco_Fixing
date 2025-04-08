@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import "../../../../styles/ElementStyle/Common/Visualizer/_baseVisualizer.scss";
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import "../../../styles/ElementStyle/VisualizerStyle/_baseVisualizer.scss";
 
 const BaseVisualizer = ({ 
   title,
@@ -14,18 +14,28 @@ const BaseVisualizer = ({
   const [speed, setSpeed] = useState(1);
   const [progress, setProgress] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [isDraggingHorizontal, setIsDraggingHorizontal] = useState(false);
   const [startY, setStartY] = useState(0);
+  const [startX, setStartX] = useState(0);
   const [startHeightCode, setStartHeightCode] = useState(0);
   const [startHeightHistory, setStartHeightHistory] = useState(0);
+  const [startWidthLeft, setStartWidthLeft] = useState(0);
+  const [startWidthRight, setStartWidthRight] = useState(0);
   const codeDisplayRef = useRef(null);
   const stepHistoryRef = useRef(null);
+  const visualizationSectionRef = useRef(null);
+  const codeSectionRef = useRef(null);
+  const overlayRef = useRef(null);
+  const verticalResizeHandleRef = useRef(null);
+  const contentRef = useRef(null);
+  const horizontalResizeHandleRef = useRef(null);
 
   const handleRefresh = () => {
     setProgress(0);
     // Additional refresh logic can be passed through props if needed
   };
 
-  const handleMouseDown = (e) => {
+  const handleVerticalMouseDown = (e) => {
     e.preventDefault();
     if (codeDisplayRef.current && stepHistoryRef.current) {
       setStartY(e.clientY);
@@ -35,7 +45,17 @@ const BaseVisualizer = ({
     }
   };
 
-  const handleMouseMove = (e) => {
+  const handleHorizontalMouseDown = (e) => {
+    e.preventDefault();
+    if (visualizationSectionRef.current && codeSectionRef.current) {
+      setStartX(e.clientX);
+      setStartWidthLeft(visualizationSectionRef.current.offsetWidth);
+      setStartWidthRight(codeSectionRef.current.offsetWidth);
+      setIsDraggingHorizontal(true);
+    }
+  };
+
+  const handleMouseMove = useCallback((e) => {
     if (isDragging && codeDisplayRef.current && stepHistoryRef.current) {
       const diff = e.clientY - startY;
       const newHeightCode = Math.max(100, startHeightCode + diff);
@@ -43,18 +63,48 @@ const BaseVisualizer = ({
       codeDisplayRef.current.style.height = `${newHeightCode}px`;
       stepHistoryRef.current.style.height = `${newHeightHistory}px`;
     }
-  };
+
+    if (isDraggingHorizontal && visualizationSectionRef.current && codeSectionRef.current) {
+      const diff = e.clientX - startX;
+      const newWidthLeft = Math.max(300, startWidthLeft + diff);
+      const newWidthRight = Math.max(300, startWidthRight - diff);
+      visualizationSectionRef.current.style.width = `${newWidthLeft}px`;
+      codeSectionRef.current.style.width = `${newWidthRight}px`;
+    }
+  }, [isDragging, isDraggingHorizontal, startY, startX, startHeightCode, startHeightHistory, startWidthLeft, startWidthRight]);
 
   const handleMouseUp = () => {
     setIsDragging(false);
+    setIsDraggingHorizontal(false);
   };
+
+  // Add global event listeners for mouse move and mouse up
+  useEffect(() => {
+    const handleGlobalMouseMove = (e) => {
+      if (isDragging || isDraggingHorizontal) {
+        handleMouseMove(e);
+      }
+    };
+
+    const handleGlobalMouseUp = () => {
+      handleMouseUp();
+    };
+
+    // Add event listeners to document
+    document.addEventListener('mousemove', handleGlobalMouseMove);
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+
+    // Cleanup
+    return () => {
+      document.removeEventListener('mousemove', handleGlobalMouseMove);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging, isDraggingHorizontal, handleMouseMove]);
 
   return (
     <div 
-      className={`visualizer-overlay ${isDragging ? 'dragging' : ''}`}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
+      ref={overlayRef}
+      className={`visualizer-overlay ${isDragging || isDraggingHorizontal ? 'dragging' : ''}`}
     >
       <div className="visualizer-container">
         <div className="header">
@@ -67,9 +117,9 @@ const BaseVisualizer = ({
           </button>
         </div>
 
-        <div className="content">
+        <div className="content" ref={contentRef}>
           {/* Left Section - Visualization */}
-          <div className="visualization-section">
+          <div className="visualization-section left-section" ref={visualizationSectionRef}>
             <div className="controls">
               {renderControls?.({
                 speed,
@@ -83,8 +133,17 @@ const BaseVisualizer = ({
             </div>
           </div>
 
+          {/* Horizontal Resize Handle */}
+          <div 
+            className="horizontal-resize-handle"
+            ref={horizontalResizeHandleRef}
+            onMouseDown={handleHorizontalMouseDown}
+          >
+            <div className="handle-bar"></div>
+          </div>
+
           {/* Right Section - Code Display */}
-          <div className="code-section">
+          <div className="code-section right-section" ref={codeSectionRef}>
             <h2>Code Display</h2>
             <div className="language-selector">
               <select
@@ -108,7 +167,8 @@ const BaseVisualizer = ({
 
             <div 
               className="resize-handle"
-              onMouseDown={handleMouseDown}
+              ref={verticalResizeHandleRef}
+              onMouseDown={handleVerticalMouseDown}
             >
               <div className="handle-bar"></div>
             </div>

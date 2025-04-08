@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import BaseVisualizer from '../../Common/Visualizer/BaseVisualizer';
+import BaseVisualizer from '../../Visualizer/BaseVisualizer';
 import "../../../../styles/ElementStyle/TopicStyle/SortStyle/_sortingVisualizer.scss";
 
 const sortingAlgorithms = [

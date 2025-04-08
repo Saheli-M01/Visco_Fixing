@@ -1,6 +1,7 @@
 @use "../../../_shared" as *;
 @use "../../../mixins" as *;
 @use "../../../variables" as *;
+@use "sass:color";
 
 .sorting-visualizer-overlay {
   position: fixed;
@@ -189,7 +190,7 @@
             transition: all 0.3s ease;
 
             &:hover {
-              background: darken($light-orange, 10%);
+              background: color.adjust($light-orange, $lightness: -10%);
             }
           }
         }
@@ -236,7 +237,7 @@
             color: $primary-background;
 
             &:hover {
-              background: darken($light-orange, 10%);
+              background: color.adjust($light-orange, $lightness: -10%);
             }
           }
         }
@@ -503,7 +504,7 @@
       transition: all 0.3s ease;
 
       &:hover {
-        background: darken($light-orange, 10%);
+        background: color.adjust($light-orange, $lightness: -10%);
       }
     }
   }
@@ -550,7 +551,7 @@
       color: $primary-background;
 
       &:hover {
-        background: darken($light-orange, 10%);
+        background: color.adjust($light-orange, $lightness: -10%);
       }
     }
   }
