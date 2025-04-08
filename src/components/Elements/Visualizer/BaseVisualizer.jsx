@@ -13,6 +13,7 @@ const BaseVisualizer = ({
   const [selectedLanguage, setSelectedLanguage] = useState('Python');
   const [speed, setSpeed] = useState(1);
   const [progress, setProgress] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isDraggingHorizontal, setIsDraggingHorizontal] = useState(false);
   const [startY, setStartY] = useState(0);
@@ -32,7 +33,35 @@ const BaseVisualizer = ({
 
   const handleRefresh = () => {
     setProgress(0);
+    setIsPlaying(false);
     // Additional refresh logic can be passed through props if needed
+  };
+
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleFirst = () => {
+    setProgress(0);
+    setIsPlaying(false);
+  };
+
+  const handlePrev = () => {
+    setProgress(prev => Math.max(0, prev - 10));
+  };
+
+  const handleStart = () => {
+    setProgress(0);
+    setIsPlaying(true);
+  };
+
+  const handleNext = () => {
+    setProgress(prev => Math.min(100, prev + 10));
+  };
+
+  const handleLast = () => {
+    setProgress(100);
+    setIsPlaying(false);
   };
 
   const handleVerticalMouseDown = (e) => {
@@ -124,7 +153,15 @@ const BaseVisualizer = ({
               {renderControls?.({
                 speed,
                 setSpeed,
-                progress
+                progress,
+                isPlaying,
+                setIsPlaying,
+                handleFirst,
+                handlePrev,
+                handleStart,
+                handleNext,
+                handleLast,
+                togglePlayPause
               })}
             </div>
 
