@@ -1,6 +1,6 @@
-@use "../../../_shared" as *;
-@use "../../../mixins" as *;
-@use "../../../variables" as *;
+@use "../../_shared" as *;
+@use "../../mixins" as *;
+@use "../../variables" as *;
 
 .visualizer-overlay {
   position: fixed;
@@ -79,6 +79,7 @@
     display: flex;
     flex: 1;
     overflow: hidden;
+    position: relative;
   }
 
   .visualization-section {
@@ -88,6 +89,9 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    min-width: 300px;
+    width: 60%;
+    transition: width 0.05s ease;
 
     .controls {
       display: flex;
@@ -105,12 +109,39 @@
     }
   }
 
+  .horizontal-resize-handle {
+    width: 12px;
+    height: 100%;
+    background: transparent;
+    cursor: ew-resize;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+    
+    &:hover .handle-bar {
+      background: rgba($light-orange, 0.5);
+      height: 60px;
+    }
+
+    .handle-bar {
+      width: 2px;
+      height: 40px;
+      background: rgba($secondary-text, 0.3);
+      border-radius: 1px;
+      transition: all 0.2s ease;
+    }
+  }
+
   .code-section {
     width: 40%;
     padding: 2rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    min-width: 300px;
+    transition: width 0.05s ease;
 
     h2 {
       color: $light-orange;
@@ -227,6 +258,18 @@
     .visualization-section,
     .code-section {
       width: 100%;
+      min-width: 100%;
+    }
+
+    .horizontal-resize-handle {
+      width: 100%;
+      height: 12px;
+      cursor: ns-resize;
+      
+      .handle-bar {
+        width: 40px;
+        height: 2px;
+      }
     }
 
     .code-section {

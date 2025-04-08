@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import BaseVisualizer from '../../Common/Visualizer/BaseVisualizer';
+import BaseVisualizer from '../../Visualizer/BaseVisualizer';
 import "../../../../styles/ElementStyle/TopicStyle/SortStyle/_sortingVisualizer.scss";
 
 const sortingAlgorithms = [
@@ -79,85 +79,91 @@ const sortingAlgorithms = [
 
 const SortingVisualizer = ({ algorithm, onClose }) => {
   const [inputArray, setInputArray] = useState('');
-  const [selectedAlgorithm, setSelectedAlgorithm] = useState(algorithm);
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState(algorithm ? algorithm.name : sortingAlgorithms[0].name);
 
-  const renderControls = ({ speed, setSpeed, progress }) => (
-    <>
-      <div className="algorithm-select">
-        <label>Select Algorithm:</label>
-        <select 
-          value={selectedAlgorithm.name} 
-          className="select-dropdown"
-          onChange={(e) => {
-            const newAlgo = sortingAlgorithms.find(algo => algo.name === e.target.value);
-            setSelectedAlgorithm(newAlgo);
-          }}
-        >
-          <optgroup label="Comparison-Based Algorithms">
-            {sortingAlgorithms.slice(0, 7).map((algo) => (
-              <option key={algo.name} value={algo.name}>
-                {algo.name}
-              </option>
+  const renderControls = ({ 
+    speed, 
+    setSpeed, 
+    progress,
+    isPlaying,
+    handleFirst,
+    handlePrev,
+    handleStart,
+    handleNext,
+    handleLast,
+    togglePlayPause
+  }) => {
+    return (
+      <>
+        <div className="algorithm-select">
+          <label>Select Algorithm:</label>
+          <select 
+            className="select-dropdown"
+            value={selectedAlgorithm}
+            onChange={(e) => setSelectedAlgorithm(e.target.value)}
+          >
+            {sortingAlgorithms.map(algo => (
+              <option key={algo.name} value={algo.name}>{algo.name}</option>
             ))}
-          </optgroup>
-          <optgroup label="Non-Comparison-Based Algorithms">
-            {sortingAlgorithms.slice(7).map((algo) => (
-              <option key={algo.name} value={algo.name}>
-                {algo.name}
-              </option>
-            ))}
-          </optgroup>
-        </select>
-      </div>
+          </select>
+        </div>
 
-      <div className="array-input">
-        <label>Enter Array:</label>
-        <div className="input-controls">
-          <div className="input-group">
-            <input
-              type="text"
-              placeholder="Enter up to 10 numbers (e.g., 64,34,25,12,22)"
-              value={inputArray}
-              onChange={(e) => setInputArray(e.target.value)}
-            />
-            <div className="speed-control">
-              <input
-                type="range"
-                min="0.5"
-                max="2"
-                step="0.5"
-                value={speed}
-                onChange={(e) => setSpeed(parseFloat(e.target.value))}
+        <div className="array-input">
+          <label>Input Array:</label>
+          <div className="input-controls">
+            <div className="input-group">
+              <input 
+                type="text" 
+                value={inputArray} 
+                onChange={(e) => setInputArray(e.target.value)}
+                placeholder="Enter comma-separated numbers"
               />
-              <span>{speed}x</span>
+              <div className="speed-control">
+                <input 
+                  type="range" 
+                  min="0.1" 
+                  max="2" 
+                  step="0.1" 
+                  value={speed} 
+                  onChange={(e) => setSpeed(parseFloat(e.target.value))}
+                />
+                <span>{speed}x</span>
+              </div>
+              <button className="play-button" onClick={togglePlayPause}>
+                <i className={`fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'}`}></i>
+              </button>
             </div>
-            <button className="play-button">
-              <i className="fa-solid fa-play"></i>
-            </button>
-          </div>
-          <div className="progress-bar">
-            <div className="progress" style={{ width: `${progress}%` }}></div>
+            <div className="progress-bar">
+              <div className="progress" style={{ width: `${progress}%` }}></div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="navigation-buttons">
-        <button className="nav-button">
-          <i className="fa-solid fa-backward-step"></i> First
-        </button>
-        <button className="nav-button">
-          <i className="fa-solid fa-chevron-left"></i> Prev
-        </button>
-        <button className="nav-button start-button">Start</button>
-        <button className="nav-button">
-          Next <i className="fa-solid fa-chevron-right"></i>
-        </button>
-        <button className="nav-button">
-          Last <i className="fa-solid fa-forward-step"></i>
-        </button>
-      </div>
-    </>
-  );
+        <div className="navigation-buttons">
+          <button className="nav-button" onClick={handleFirst}>
+            <i className="fa-solid fa-backward-step"></i>
+            First
+          </button>
+          <button className="nav-button" onClick={handlePrev}>
+            <i className="fa-solid fa-backward"></i>
+            Prev
+          </button>
+          <button className="nav-button start-button" onClick={handleStart}>
+            <i className="fa-solid fa-play"></i>
+            Start
+          </button>
+          <button className="nav-button" onClick={handleNext}>
+            <i className="fa-solid fa-forward"></i>
+            Next
+          </button>
+          <button className="nav-button" onClick={handleLast}>
+            <i className="fa-solid fa-forward-step"></i>
+            Last
+          </button>
+        </div>
+      </>
+    );
+  };
 
   const renderVisualization = () => (
     <>
@@ -168,19 +174,88 @@ const SortingVisualizer = ({ algorithm, onClose }) => {
     </>
   );
 
-  const renderCode = (selectedLanguage) => (
-    <pre>
-      <code className={`language-${selectedLanguage.toLowerCase()}`}>
-        {`def ${selectedAlgorithm.name.toLowerCase().replace(/\s+/g, '_')}(arr):
+  const renderCode = (language) => {
+    // Get the selected algorithm object
+    const algo = sortingAlgorithms.find(a => a.name === selectedAlgorithm) || sortingAlgorithms[0];
+    
+    // Generate code based on the selected language and algorithm
+    let code = '';
+    
+    switch (language) {
+      case 'Python':
+        code = `def ${algo.name.toLowerCase().replace(/\s+/g, '_')}(arr):
     n = len(arr)
     for i in range(n):
         for j in range(0, n-i-1):
             if arr[j] > arr[j+1]:
                 arr[j], arr[j+1] = arr[j+1], arr[j]
-    return arr`}
-      </code>
-    </pre>
-  );
+    return arr`;
+        break;
+      case 'JavaScript':
+        code = `function ${algo.name.toLowerCase().replace(/\s+/g, '')}(arr) {
+  const n = arr.length;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+      }
+    }
+  }
+  return arr;
+}`;
+        break;
+      case 'Java':
+        code = `public static void ${algo.name.toLowerCase().replace(/\s+/g, '')}(int[] arr) {
+  int n = arr.length;
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        int temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+      }
+    }
+  }
+}`;
+        break;
+      case 'C++':
+        code = `void ${algo.name.toLowerCase().replace(/\s+/g, '')}(int arr[], int n) {
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        int temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+      }
+    }
+  }
+}`;
+        break;
+      case 'C':
+        code = `void ${algo.name.toLowerCase().replace(/\s+/g, '')}(int arr[], int n) {
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        int temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+      }
+    }
+  }
+}`;
+        break;
+      default:
+        code = `// ${algo.name} implementation in ${language}`;
+    }
+    
+    return (
+      <pre>
+        <code className={`language-${language.toLowerCase()}`}>
+          {code}
+        </code>
+      </pre>
+    );
+  };
 
   const renderStepHistory = () => (
     // Step history content will be added here
